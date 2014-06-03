@@ -14,49 +14,60 @@ public class UserManager {
 	
 	/** User list pre-loaded */
 	private List<User> userList = new ArrayList<User>();
-	
-	/** user count */
-	private int userCount;
 
 	/**
-	 * constructor to set style and type.
+	 * constructor.
 	 * 
 	 * @param 
 	 * @return 
 	 */
-	public LoginView() {
-		
-		this.style = viewStyle.LOGIN;
-		this.type = handleType.LOGIN;
+	public UserManager() {
 		
 	}
 	
-	
 	/**
-	 * run authentication.
+	 * authentication.
 	 * 
 	 * @param string id.
 	 * @param string pass.
 	 * @return boolean state
 	 */
-	public boolean runAuthenticate(String i, String p) {
+	public boolean authenticate(String i, String p) {
 		
+		boolean state = false;
 		//TODO: make login process.
 		
 		return state;
 	}
 	
 	/**
-	 * run new user.
+	 * new user.
 	 * 
 	 * @param string id.
 	 * @param string pass.
 	 * @return boolean state
 	 */
-	public boolean runNewUser(String i, String p) {
+	public boolean newUser(String i, String p) {
 		
+		boolean state = false;
 		//TODO: make new user in DB.
 		
 		return state;
 	}
+	
+	/**
+	 * delete user.
+	 * 
+	 * @param string id.
+	 * @param string pass.
+	 * @return boolean state
+	 */
+	public boolean delUser(String i, String p) {
+		
+		boolean state = false;
+		//TODO: make new user in DB.
+		
+		return state;
+	}
+	
 }

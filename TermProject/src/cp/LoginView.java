@@ -11,9 +11,6 @@ public class LoginView {
 		
 	/** handleType */
 	private handleType type;
-		
-	/** User */
-	private User user;
 	
 	/** ID */
 	private String id;
@@ -35,21 +32,21 @@ public class LoginView {
 		this.style = viewStyle.LOGIN;
 		this.type = handleType.LOGIN;
 		
+		//TODO:display initial view.
+		
 	}
-	
 	
 	/**
 	 * run authentication.
 	 * 
 	 * @param string id.
 	 * @param string pass.
-	 * @return boolean state
+	 * @return 
 	 */
-	public boolean runAuthenticate(String i, String p) {
+	public void runAuthenticate(String i, String p) {
 		
 		//TODO: make login process.
 		
-		return state;
 	}
 	
 	/**
@@ -57,14 +54,25 @@ public class LoginView {
 	 * 
 	 * @param string id.
 	 * @param string pass.
-	 * @return boolean state
+	 * @return 
 	 */
-	public boolean runNewUser(String i, String p) {
+	public void runNewUser(String i, String p) {
 		
 		//TODO: make new user in DB.
 		
-		return state;
 	}
 
+	/**
+	 * run delete user.
+	 * 
+	 * @param string id.
+	 * @param string pass.
+	 * @return 
+	 */
+	public void runDelUser(String i, String p) {
+		
+		//TODO: delete user in DB.
+		
+	}
 	
 }

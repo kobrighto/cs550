@@ -15,9 +15,6 @@ public class DiagramView {
 	/** current diagram */
 	private Diagram curDiagram;
 	
-	/** path of Diagram */
-	private String path;
-	
 	/** password */
 	private int lastDiaVersion;
 
@@ -32,20 +29,9 @@ public class DiagramView {
 		this.style = viewStyle.LOGIN;
 		this.type = handleType.LOGIN;
 		
-		this.lastDiaVersion = getLastVersion();
+		this.lastDiaVersion = getDiaLastVersion();
 		
-	}
-	
-	/**
-	 * display current diagram.
-	 * 
-	 * @param 
-	 * @return 
-	 */
-	public void displayCurr() {
-
-		//TODO: connect to diagram viewer 
-		//display(curDiagram);
+		//TODO:display initial view.
 		
 	}
 	
@@ -76,7 +62,7 @@ public class DiagramView {
 	}
 	
 	/**
-	 * load diagram from DB.
+	 * new Diagram
 	 * 
 	 * @param string path.
 	 * @return 
@@ -89,9 +75,9 @@ public class DiagramView {
 	}
 	
 	/**
-	 * load diagram from DB.
+	 * run Commit.
 	 * 
-	 * @param string path.
+	 * @param 
 	 * @return 
 	 */
 	public void runCommit() {

@@ -1,5 +1,7 @@
 package cp;
 
+import db.Diagram;
+
 public class HDVCS_UI {
 	
 	/** viewStyle */
@@ -35,10 +37,22 @@ public class HDVCS_UI {
 	 * @param string message.
 	 * @return 
 	 */
-	public String display(String msg) {
+	public void display(String msg) {
 		
+		//TODO: display msg.
 		
-		return msg;
+	}
+	
+	/**
+	 * display diagram.
+	 * 
+	 * @param Diagram diagram.
+	 * @return 
+	 */
+	public void display(Diagram dia) {
+		
+		//TODO: display diagram.
+		
 	}
 	
 	public static void main(String[] args) {

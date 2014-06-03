@@ -23,7 +23,7 @@ public class VersionView {
 	private Diagram diffDiagram;
 	
 	/** snapshot list */
-	private List<Snapshot> snapshotList;
+	private Diagram snapshotTree;
 	
 	/** version tree */
 	private Diagram versionTree;
@@ -42,23 +42,11 @@ public class VersionView {
 		this.style = viewStyle.LOGIN;
 		this.type = handleType.LOGIN;
 		
-		this.lastSnapVersion = getSnapCount();
-		this.snapshotList = getSnapshotList();
+		this.lastSnapVersion = getSnapLastVersion();
+		this.snapshotTree = makeSnapTree();
 		this.versionTree = makeVersionTree();
 		
-	}
-	
-	
-	/**
-	 * display Tree.
-	 * 
-	 * @param  
-	 * @return 
-	 */
-	public void displayTree() {
-		
-		//TODO: make graph by using list of diagram and show
-		//makeTree
+		//TODO:display initial view. (version tree)
 		
 	}
 	
@@ -68,23 +56,10 @@ public class VersionView {
 	 * @param 
 	 * @return 
 	 */
-	public void displaySnapshots() {
+	public void displaySnap(int sID) {
 		
-		//TODO: display snapshot version list
+		//TODO: display snapshot 
 		//show
-		
-	}
-	
-	/**
-	 * display diff diagram.
-	 * 
-	 * @param 
-	 * @return 
-	 */
-	public void displayDiff() {
-		
-		//TODO: display diff diagram
-		//display(diffDiagram);
 		
 	}
 	
@@ -99,6 +74,30 @@ public class VersionView {
 		//TODO: find correct diagram by using version.
 		//Diagram temp = versionTree.get(v);
 		//display(temp);
+		
+	}
+	
+	/**
+	 * display versionTree.
+	 * 
+	 * @param 
+	 * @return 
+	 */
+	public void displayVersionTree() {
+		
+		//TODO: show versionTree
+		
+	}
+	
+	/**
+	 * display snapshotTree.
+	 * 
+	 * @param 
+	 * @return 
+	 */
+	public void displaySnapTree() {
+		
+		//TODO: show snapTree
 		
 	}
 	
