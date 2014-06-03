@@ -1,16 +1,13 @@
 package cp;
 
-import cp.HDVCS_UI.handleType;
 import cp.HDVCS_UI.viewStyle;
 import db.Diagram;
+import vcs.DiagramManager;
 
-public class DiagramView {
+public class DiagramView extends HDVCS_UI {
 	
 	/** viewStyle */
 	private viewStyle style;
-		
-	/** handleType */
-	private handleType type;
 		
 	/** current diagram */
 	private Diagram curDiagram;
@@ -27,9 +24,8 @@ public class DiagramView {
 	public DiagramView() {
 		
 		this.style = viewStyle.LOGIN;
-		this.type = handleType.LOGIN;
 		
-		this.lastDiaVersion = getDiaLastVersion();
+		this.lastDiaVersion = diaHandler.getDiaLastVersion();
 		
 		//TODO:display initial view.
 		

@@ -1,5 +1,8 @@
 package cp;
 
+import vcs.DiagramManager;
+import vcs.SnapshotManager;
+import vcs.UserManager;
 import db.Diagram;
 
 public class HDVCS_UI {
@@ -9,6 +12,11 @@ public class HDVCS_UI {
 	
 	/** handleType */
 	public enum  handleType {LOGIN, DIAGRAM, VERSION};
+	
+	/** handler */
+	protected UserManager logHandler;
+	protected DiagramManager diaHandler;
+	protected SnapshotManager snapHandler;
 		
 	/**
 	 * shift style of UI view.
@@ -27,7 +35,7 @@ public class HDVCS_UI {
 	 * @param enum handle type.
 	 * @return 
 	 */
-	public void shiftHandleType(handleType type) {
+	public void settHandleType(handleType type) {
 	
 	}
 	

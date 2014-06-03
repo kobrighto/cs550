@@ -24,7 +24,7 @@ public class DiagramManager {
 	}
 	
 	/**
-	 * load diagram from local.
+	 * load diagram from DB.
 	 * 
 	 * @param String id
 	 * @param String pass
@@ -115,8 +115,8 @@ public class DiagramManager {
 	/**
 	 * Send last version of diagram to versionView.
 	 * 
-	 * @param int version
-	 * @return boolean state
+	 * @param 
+	 * @return int lastVersion
 	 */
 	public int getDiaLastVersion() {
 		

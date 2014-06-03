@@ -2,19 +2,23 @@ package cp;
 
 import java.util.List;
 
+import vcs.DiagramManager;
+import vcs.SnapshotManager;
+
 import cp.HDVCS_UI.handleType;
 import cp.HDVCS_UI.viewStyle;
 import db.Diagram;
 import db.Snapshot;
 import db.User;
 
-public class VersionView {
+public class VersionView extends HDVCS_UI {
 
 	/** viewStyle */
 	private viewStyle style;
 		
 	/** handleType */
-	private handleType type;
+	private DiagramManager diaHandler;
+	private SnapshotManager snapHandler;
 		
 	/** current diagram */
 	private Diagram curDiagram;
@@ -40,11 +44,10 @@ public class VersionView {
 	public VersionView() {
 		
 		this.style = viewStyle.LOGIN;
-		this.type = handleType.LOGIN;
 		
-		this.lastSnapVersion = getSnapLastVersion();
-		this.snapshotTree = makeSnapTree();
-		this.versionTree = makeVersionTree();
+		this.lastSnapVersion = snapHandler.getSnapLastVersion();
+		this.snapshotTree = snapHandler.makeSnapTree();
+		this.versionTree = diaHandler.makeVersionTree();
 		
 		//TODO:display initial view. (version tree)
 		

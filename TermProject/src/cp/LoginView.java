@@ -1,16 +1,14 @@
 package cp;
 
+import vcs.UserManager;
 import cp.HDVCS_UI.handleType;
 import cp.HDVCS_UI.viewStyle;
 import db.User;
 
-public class LoginView {
+public class LoginView extends HDVCS_UI {
 
 	/** viewStyle */
 	private viewStyle style;
-		
-	/** handleType */
-	private handleType type;
 	
 	/** ID */
 	private String id;
@@ -30,7 +28,6 @@ public class LoginView {
 	public LoginView() {
 		
 		this.style = viewStyle.LOGIN;
-		this.type = handleType.LOGIN;
 		
 		//TODO:display initial view.
 		
