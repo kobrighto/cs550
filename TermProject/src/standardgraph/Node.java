@@ -1,4 +1,4 @@
-package kaist.cs550.termproject.standardgraph;
+package standardGraph;
 
 public class Node {
 	private int number;

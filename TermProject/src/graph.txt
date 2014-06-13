@@ -1,0 +1,13 @@
+<Node>
+1 Minh
+2 Wondeuk
+3 Jiyong
+4 Janggwan
+</Node>
+<Edge>
+self undirected 1 1
+classmate undirected 1 2
+classmate undirected 1 3
+classmate undirected 2 3
+labmate undirected 1 4
+</Edge>

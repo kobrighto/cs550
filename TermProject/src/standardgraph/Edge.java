@@ -1,15 +1,15 @@
-package kaist.cs550.termproject.standardgraph;
+package standardGraph;
 
 public class Edge {
 	private boolean isDirected;
-	private int fromEdge;
-	private int toEdge;
+	private int fromNode;
+	private int toNode;
 	private String label;
 	
-	public Edge(int fromEdge, int toEdge, boolean isDirected, String label){
+	public Edge(int fromNode, int toNode, boolean isDirected, String label){
 		this.isDirected=isDirected;
-		this.fromEdge=fromEdge;
-		this.toEdge=toEdge;
+		this.fromNode=fromNode;
+		this.toNode=toNode;
 		this.label=label;
 	}
 	
@@ -17,12 +17,12 @@ public class Edge {
 		return isDirected;
 	}
 	
-	public int getFromEdge(){
-		return fromEdge;
+	public int getFromNode(){
+		return fromNode;
 	}
 	
-	public int getToEdge(){
-		return toEdge;
+	public int getToNode(){
+		return toNode;
 	}
 	
 	public String getLabel(){
