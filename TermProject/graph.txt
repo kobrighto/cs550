@@ -1,0 +1,17 @@
+<Graph>
+Directed
+</Graph>
+<Node>
+1 Minh
+2 Wondeuk
+3 Jiyong
+4 Janggwan
+</Node>
+<Edge>
+1 1 self
+1 2 labmate
+1 2 classmate
+1 3 classmate
+1 4 classmate
+3 4 labmate
+</Edge>

@@ -1,19 +1,19 @@
 package standardGraph;
 
 public class Node {
-	private int number;
+	private int id; //unique identifier
 	private String label;
 	
-	public Node(int number, String label){
-		this.number = number;
+	public Node(int id, String label){
+		this.id = id;
 		this.label = label;
-	}
-	
-	public int getNumber(){
-		return number;
 	}
 	
 	public String getLabel(){
 		return label;
+	}
+	
+	public int getID(){
+		return id;
 	}
 }
