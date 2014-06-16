@@ -74,15 +74,16 @@ public class UserManager {
 		try{
 			Connection conn=JDBC.getConnection();
 			
-			PreparedStatement prestatement=conn.prepareStatement("insert into user values (?,?,?)");
+			PreparedStatement prestatement=conn.prepareStatement("insert into user values (?,?)");
 			prestatement.setString(1,i);
 			prestatement.setString(2,p);
-			prestatement.setInt(3,0); //number of the diagrams
+			//prestatement.setInt(3,0); //number of the diagrams
 			prestatement.executeUpdate();
 			state=true;
 			System.out.println("New User creation is completed");
 		}catch(Exception e){
 			System.out.println("NEw User creation error!");
+			e.printStackTrace();
 		}
 		return state;
 	}

@@ -8,24 +8,18 @@ public class User {
 	/** password */
 	private String pass;
 	
-	private int numDiagram;
 	/**
 	 * constructor to set style and type.
 	 * 
 	 * @param .
 	 * @return 
 	 */
-	public User(String i, String p) {  //first user
+	public User(String i, String p) 
+	{  
 		
-		this.id = i;
-		this.pass = p;
-		this.numDiagram=0;
-	}
-	public User(String i, String p,int num) {  //existing user
-		
-		this.id = i;
-		this.pass = p;
-		this.numDiagram=num;
+		this.id = new String(i);
+		this.pass = new String(p);
+
 	}
 
 }

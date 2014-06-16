@@ -3,15 +3,18 @@ package db;
 public class Snapshot {
 
 	/** snapshot */
-	private Diagram snapshot;
+	private Version version;
+	
+	/** snapshot id */
+	private int sId;
+	
+	/** comment of snapshot */
+	private String scomment;
 	
 	@Override
 	public String toString() {
-		return "Snapshot [snapshot=" + snapshot + ", version=" + version + "]";
+		return "Snapshot [snapshot=" + version.getDiagram() + ", snapshot id=" + sId + "snapshot comments=" + scomment + "]";
 	}
-
-	/** version */
-	private int version;
 	
 	/**
 	 * constructor to set snapshot and version.
@@ -22,26 +25,26 @@ public class Snapshot {
 	public Snapshot(){
 		
 	}
-	public Snapshot(Diagram s, int v) {
+	public Snapshot(Version v, int sid) {
 		
-		this.snapshot = s;
 		this.version = v;
+		this.sId = sid;
 		
 	}
 
-	public Diagram getSnapshot() {
-		return snapshot;
-	}
-
-	public int getVersion() {
+	public Version getVersion() {
 		return version;
 	}
 
-	public void setSnapshot(Diagram snapshot) {
-		this.snapshot = snapshot;
+	public int getsId() {
+		return sId;
 	}
 
-	public void setVersion(int version) {
-		this.version = version;
+	public void setVersion(Version v) {
+		this.version = v;
+	}
+
+	public void setsID(int sid) {
+		this.sId = sid;
 	}
 }

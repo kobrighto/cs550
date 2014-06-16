@@ -1,27 +1,28 @@
 package cp;
 
 import java.io.BufferedReader;
+import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.lang.Thread.State;
 
 import graphView.JungViewer;
-import db.Diagram;
+import db.Version;
 import standardGraph.*;
-import vcs.DiagramManager;
 import vcs.SnapshotManager;
 import vcs.UserManager;
+import vcs.VersionManager;
 
 public class HDVCS_UI {
 	
 	/** viewStyle */
-	public enum  viewStyle {LOGIN, DIAGRAM, VERSION};
+	public enum  viewStyle {LOGIN, VERSION, SNAPSHOT};
 	
 	/** handleType */
-	public enum  handleType {LOGIN, DIAGRAM, VERSION};
+	public enum  handleType {LOGIN, VERSION, SNAPSHOT};
 		
 	/** handler */
-	protected DiagramManager diaHandler = new DiagramManager();
+	protected VersionManager diaHandler = new VersionManager();
 	protected SnapshotManager snapHandler = new SnapshotManager();
 	protected UserManager userHandler = new UserManager();
 	
@@ -88,17 +89,18 @@ public class HDVCS_UI {
 		this.running = true;
 		boolean state = false;
 		LoginView logView = new LoginView();
-		DiagramView diaView = new DiagramView();
-		VersionView verView = new VersionView();
 		
 		if ((state = logView.runLoginView()) == false)
 			this.stopProgram();
 		else
 		{
 			System.out.println("Login completed!!");
-			diaHandler.loadDiaData(logView.getId(), logView.getPass());
-			snapHandler.loadSnapData(logView.getId(), logView.getPass());
+			diaHandler.loadDiaData(logView.getId());
+			snapHandler.loadSnapData(logView.getId());
 		}
+		
+		DiagramView diaView = new DiagramView();
+		VersionView verView = new VersionView();
 		
 		while (running)
 		{
@@ -173,5 +175,22 @@ public class HDVCS_UI {
 		
 		ui.runProgram();
 		
+	}
+	
+	String readFile(String fileName) throws IOException {
+	    BufferedReader br = new BufferedReader(new FileReader(fileName));
+	    try {
+	        StringBuilder sb = new StringBuilder();
+	        String line = br.readLine();
+
+	        while (line != null) {
+	            sb.append(line);
+	            sb.append("\n");
+	            line = br.readLine();
+	        }
+	        return sb.toString();
+	    } finally {
+	        br.close();
+	    }
 	}
 }
