@@ -1,5 +1,8 @@
 package cp;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.List;
 
 import vcs.DiagramManager;
@@ -137,6 +140,97 @@ public class VersionView extends HDVCS_UI {
 		
 		//TODO: delete selected version of diagram.
 		//boolean state = deleteDiagram(v);
+		
+	}
+	
+	/**
+	 * run LoginView.
+	 * 
+	 * @param 
+	 * @return integer next do
+	 */
+	public int runVersionView() {
+		
+		InputStreamReader in=new InputStreamReader(System.in);
+	    BufferedReader br=new BufferedReader(in);
+		
+		while (!state)
+		{
+			int select = -1;
+			System.out.println("1. Login.");
+			System.out.println("2. New User.");
+			System.out.println("3. Delete User");
+			
+			System.out.print("Select : ");
+			
+			try {
+				select = System.in.read();
+			} catch (IOException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+			
+			switch (select)
+			{
+			case 1:
+				try {
+					System.out.println("Enter ID & PASS");
+					System.out.print("ID : ");
+					String i = br.readLine();
+					
+					System.out.print("PASS : ");
+					String p = br.readLine();
+						
+					this.runAuthenticate(i, p);
+					
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}	
+				break;
+			
+			case 2:
+				try {
+					System.out.println("Enter New ID & PASS");
+					System.out.print("ID : ");
+					String i = br.readLine();
+					
+					System.out.print("PASS : ");
+					String p = br.readLine();
+						
+					this.runNewUser(i, p);
+					
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				break;
+			
+			case 3:
+				try {
+					System.out.println("Enter Delete ID & PASS");
+					System.out.print("ID : ");
+					String i = br.readLine();
+					
+					System.out.print("PASS : ");
+					String p = br.readLine();
+						
+					this.runDelUser(i, p);
+					
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				break;
+
+			default:
+				System.out.println("Select correct number.");
+				break;
+			}	
+	
+		}
+		
+		return state;
 		
 	}
 

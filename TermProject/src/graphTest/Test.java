@@ -15,6 +15,8 @@ public class Test {
 		
 		oldGraph.print();
 		newGraph.print();
+		JungViewer viewer = new JungViewer();
+		viewer.display(oldGraph);
 		
 		GraphComparison compare = new GraphComparison();
 		compare.print(oldGraph, newGraph);
