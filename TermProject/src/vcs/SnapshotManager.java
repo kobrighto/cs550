@@ -123,12 +123,6 @@ public class SnapshotManager {
 				snapshotList.add(snap);	
 			}
 			
-			prestatement=conn.prepareStatement("select snapid from diagram where owner=? order by version desc limit 1");
-			prestatement.setString(1, this.id);
-			rs=prestatement.executeQuery();
-			while(rs.next()){
-				lastSnapshot=rs.getInt("snapid");
-			}
 			
 			//TODO: make snapshot tree
 			System.out.println("Make snapshotTree is completed");
@@ -148,8 +142,6 @@ public class SnapshotManager {
 	 */
 	public int getSnapLastVersion() {
 		
-		//TODO: find last version of snapshot.
-		//lastVersion = ~~;
 		try{
 			Connection conn=JDBC.getConnection();
 			PreparedStatement prestatement=conn.prepareStatement("select snapid from diagram where owner=? order by version desc limit 1");

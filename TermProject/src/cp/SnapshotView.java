@@ -10,12 +10,10 @@ import java.util.List;
 
 import standardGraph.GraphComparison;
 import standardGraph.StandardGraph;
-import vcs.DiagramManager;
 import vcs.SnapshotManager;
 
 import cp.HDVCS_UI.handleType;
 import cp.HDVCS_UI.viewStyle;
-import db.Diagram;
 import db.Snapshot;
 import db.User;
 
@@ -28,13 +26,7 @@ public class SnapshotView extends HDVCS_UI {
 	private Snapshot snapshot;
 	
 	/** snapshot list */
-	private Diagram snapshotTree;
-	
-	/** version tree */
-	private Diagram versionTree;
-	
-	/** password */
-	private int lastSnapVersion;
+	private StandardGraph snapshotTree;
 
 	/**
 	 * constructor to set style and type and lastversion.
@@ -68,35 +60,6 @@ public class SnapshotView extends HDVCS_UI {
 	}
 	
 	/**
-	 * display selected diagram.
-	 * 
-	 * @param int version
-	 * @return 
-	 */
-	public void displayDiagram(int v) {
-		
-		GraphReaderTXT Reader = new GraphReaderTXT();
-		Diagram temp = diaHandler.getDiagram(v);
-		
-		StandardGraph newGraph = Reader.readString(temp.getDiagram());
-		
-		this.display(newGraph);
-		
-	}
-	
-	/**
-	 * display versionTree.
-	 * 
-	 * @param 
-	 * @return 
-	 */
-	public void displayVersionTree() {
-		
-		//TODO: show versionTree
-		
-	}
-	
-	/**
 	 * display snapshotTree.
 	 * 
 	 * @param 
@@ -105,26 +68,6 @@ public class SnapshotView extends HDVCS_UI {
 	public void displaySnapTree() {
 		
 		//TODO: show snapTree
-		
-	}
-	
-	/**
-	 * run difference.
-	 * 
-	 * @param int version1
-	 * @param int version2
-	 * @return 
-	 */
-	public void runDiff(int v1, int v2) {
-		
-		GraphReaderTXT oldReader = new GraphReaderTXT();
-		GraphReaderTXT newReader = new GraphReaderTXT();
-		StandardGraph oldGraph = oldReader.readString(diaHandler.getDiagram(v1).getDiagram());
-		StandardGraph newGraph = newReader.readString(diaHandler.getDiagram(v2).getDiagram());
-		
-		GraphComparison compare = new GraphComparison();
-		compare.print(oldGraph, newGraph);
-		compare.display(oldGraph, newGraph);
 		
 	}
 	
@@ -147,24 +90,12 @@ public class SnapshotView extends HDVCS_UI {
 	}
 	
 	/**
-	 * run delete selected version of diagram.
-	 * 
-	 * @param int version
-	 * @return 
-	 */
-	public void runDeleteVersion(int v) {
-		
-		diaHandler.delDiagram(v);
-		
-	}
-	
-	/**
-	 * run LoginView.
+	 * run SnapshotView.
 	 * 
 	 * @param 
 	 * @return integer next do
 	 */
-	public int runVersionView() {
+	public int runSnapshotView() {
 		
 		this.lastSnapVersion = snapHandler.getSnapLastVersion();
 		InputStreamReader in=new InputStreamReader(System.in);
