@@ -47,6 +47,26 @@ public class LoginView extends HDVCS_UI {
 	}
 	
 	/**
+	 * get ID.
+	 * 
+	 * @param 
+	 * @return String id
+	 */
+	public String getId() {
+		return id;
+	}
+
+	/**
+	 * get Pass.
+	 * 
+	 * @param 
+	 * @return String pass
+	 */
+	public String getPass() {
+		return pass;
+	}
+	
+	/**
 	 * run authentication.
 	 * 
 	 * @param string id.
@@ -55,7 +75,11 @@ public class LoginView extends HDVCS_UI {
 	 */
 	public void runAuthenticate(String i, String p) {
 		
-		this.state = userHandler.authenticate(i, p);
+		if((this.state = userHandler.authenticate(i, p)) == true)
+		{
+			this.id = i;	
+			this.pass = p;
+		}
 		
 	}
 	
@@ -101,16 +125,19 @@ public class LoginView extends HDVCS_UI {
 			int select = -1;
 			System.out.println("1. Login.");
 			System.out.println("2. New user.");
-			System.out.println("3. Delete user");
+			System.out.println("3. Delete user.");
+			System.out.println("4. Stop program.");
 			
 			System.out.print("Select : ");
 			
 			try {
-				select = System.in.read();
+				select = Integer.parseInt(br.readLine());
 			} catch (IOException e1) {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}
+			System.out.println("----------------------------");
+			System.out.println("");
 			
 			switch (select)
 			{
@@ -122,8 +149,11 @@ public class LoginView extends HDVCS_UI {
 					
 					System.out.print("PASS : ");
 					String p = br.readLine();
-						
+				
 					this.runAuthenticate(i, p);
+						
+					System.out.println("----------------------------");
+					System.out.println("");	
 					
 				} catch (IOException e) {
 					// TODO Auto-generated catch block
@@ -139,8 +169,11 @@ public class LoginView extends HDVCS_UI {
 					
 					System.out.print("PASS : ");
 					String p = br.readLine();
-						
+				
 					this.runNewUser(i, p);
+						
+					System.out.println("----------------------------");
+					System.out.println("");
 					
 				} catch (IOException e) {
 					// TODO Auto-generated catch block
@@ -156,23 +189,31 @@ public class LoginView extends HDVCS_UI {
 					
 					System.out.print("PASS : ");
 					String p = br.readLine();
-						
+
 					this.runDelUser(i, p);
+					
+					System.out.println("----------------------------");
+					System.out.println("");
 					
 				} catch (IOException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 				break;
+				
+			case 4:
+				return false;
 
 			default:
 				System.out.println("Select correct number.");
+				System.out.println("----------------------------");
+				System.out.println("");
 				break;
 			}	
 	
 		}
 		
-		return state;
+		return true;
 		
 	}	
 	

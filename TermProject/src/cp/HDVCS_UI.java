@@ -1,6 +1,8 @@
 package cp;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.lang.Thread.State;
 
 import graphView.JungViewer;
@@ -80,6 +82,9 @@ public class HDVCS_UI {
 	 */
 	public void runProgram() {
 		
+		InputStreamReader in=new InputStreamReader(System.in);
+	    BufferedReader br=new BufferedReader(in);
+	    
 		this.running = true;
 		boolean state = false;
 		LoginView logView = new LoginView();
@@ -89,8 +94,12 @@ public class HDVCS_UI {
 		if ((state = logView.runLoginView()) == false)
 			this.stopProgram();
 		else
+		{
 			System.out.println("Login completed!!");
-				
+			diaHandler.loadDiaData(logView.getId(), logView.getPass());
+			snapHandler.loadSnapData(logView.getId(), logView.getPass());
+		}
+		
 		while (running)
 		{
 			int select = -1;
@@ -104,11 +113,13 @@ public class HDVCS_UI {
 			System.out.print("Select : ");
 			
 			try {
-				select = System.in.read();
+				select = Integer.parseInt(br.readLine());
 			} catch (IOException e1) {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}
+			System.out.println("----------------------------");
+			System.out.println("");
 			
 			switch (select)
 			{
@@ -134,6 +145,8 @@ public class HDVCS_UI {
 
 			default:
 				System.out.println("Select correct number.");
+				System.out.println("----------------------------");
+				System.out.println("");
 				break;
 			}
 			

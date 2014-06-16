@@ -32,8 +32,6 @@ public class DiagramView extends HDVCS_UI {
 		
 		this.style = viewStyle.LOGIN;
 		
-		this.lastDiaVersion = diaHandler.getDiaLastVersion();
-		
 		//TODO:display initial view.
 		
 	}
@@ -110,6 +108,7 @@ public class DiagramView extends HDVCS_UI {
 	 */
 	public int runDiagramView() {
 		
+		this.lastDiaVersion = diaHandler.getDiaLastVersion();
 		InputStreamReader in=new InputStreamReader(System.in);
 	    BufferedReader br=new BufferedReader(in);
 		
@@ -126,11 +125,13 @@ public class DiagramView extends HDVCS_UI {
 			System.out.print("Select : ");
 			
 			try {
-				select = System.in.read();
+				select = Integer.parseInt(br.readLine());
 			} catch (IOException e1) {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}
+			System.out.println("----------------------------");
+			System.out.println("");
 			
 			switch (select)
 			{
@@ -138,8 +139,11 @@ public class DiagramView extends HDVCS_UI {
 				try {
 					System.out.println("Enter alsolute path: ");
 					String p = br.readLine();
-					
+				
 					this.loadLocal(p);
+					
+					System.out.println("----------------------------");
+					System.out.println("");
 					
 				} catch (IOException e) {
 					// TODO Auto-generated catch block
@@ -150,11 +154,14 @@ public class DiagramView extends HDVCS_UI {
 			case 2:
 				try {
 					System.out.println("Enter load diagram version: ");
-					System.out.print("ID : ");
-					int v = br.read();
-						
+					System.out.print("Version : ");
+					int v = Integer.parseInt(br.readLine());
+					
 					this.loadDB(v);
 					
+					System.out.println("----------------------------");
+					System.out.println("");
+						
 				} catch (IOException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -164,6 +171,8 @@ public class DiagramView extends HDVCS_UI {
 			case 3:
 
 					System.out.println("Implemented exception.");
+					System.out.println("----------------------------");
+					System.out.println("");
 
 				break;
 				
@@ -179,6 +188,8 @@ public class DiagramView extends HDVCS_UI {
 				
 			default:
 				System.out.println("Select correct number.");
+				System.out.println("----------------------------");
+				System.out.println("");
 				break;
 			}	
 	

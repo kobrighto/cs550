@@ -1,7 +1,10 @@
 package graphIO;
 
 import java.io.BufferedReader;
+import java.io.ByteArrayInputStream;
 import java.io.FileReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 
 import standardGraph.*;
@@ -24,7 +27,54 @@ public class GraphReaderTXT {
 	StandardGraph newGraph = new StandardGraph();
 	
 	public StandardGraph readString(String diagram) {
-		// TODO Auto-generated method stub
+			
+		boolean isDirected = false;		
+		BufferedReader br = null;
+		String dataType = null;
+		
+		// convert String into InputStream
+		InputStream is = new ByteArrayInputStream(diagram.getBytes());
+	 
+		// read it with BufferedReader
+		br = new BufferedReader(new InputStreamReader(is));
+		
+		try{
+			String sCurrentLine;
+			
+			while ((sCurrentLine = br.readLine()) != null){
+				if (sCurrentLine.trim().equalsIgnoreCase("<Graph>")){
+					dataType = "graph";
+				}else if (sCurrentLine.trim().equalsIgnoreCase("</Graph>")){
+					dataType = null;
+				}else if (sCurrentLine.trim().equalsIgnoreCase("<Node>")){
+					dataType = "node";
+				}else if (sCurrentLine.trim().equalsIgnoreCase("</Node>")){
+					dataType = null;
+				}else if (sCurrentLine.trim().equalsIgnoreCase("<Edge>")){
+					dataType = "edge";
+				}else if (sCurrentLine.trim().equalsIgnoreCase("</Edge>")){
+					dataType = null;
+				}else{
+					if (dataType.equalsIgnoreCase("graph")){
+						readGraph(sCurrentLine);
+					}else if (dataType.equalsIgnoreCase("node")){
+						readNode(sCurrentLine);
+					}else if(dataType.equalsIgnoreCase("edge")){
+						readEdge(sCurrentLine);
+					}else{
+						System.err.println("Graph Input file format error!");
+						br.close();
+						return null;
+					}
+				}
+			}
+			br.close();
+			
+			return newGraph;
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+		
 		return null;
 	}
 	

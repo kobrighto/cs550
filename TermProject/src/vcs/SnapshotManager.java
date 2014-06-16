@@ -115,7 +115,7 @@ public class SnapshotManager {
 	 * @param int version
 	 * @return boolean state
 	 */
-	public boolean snapshot(Diagram d, int v) {
+	public boolean snapshot(Diagram d) {
 		
 		boolean state = false;
 		//TODO: snapshot

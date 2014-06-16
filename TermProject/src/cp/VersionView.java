@@ -1,10 +1,15 @@
 package cp;
 
+import graphIO.GraphReaderTXT;
+import graphView.JungViewer;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.List;
 
+import standardGraph.GraphComparison;
+import standardGraph.StandardGraph;
 import vcs.DiagramManager;
 import vcs.SnapshotManager;
 
@@ -44,7 +49,6 @@ public class VersionView extends HDVCS_UI {
 		
 		this.style = viewStyle.LOGIN;
 		
-		this.lastSnapVersion = snapHandler.getSnapLastVersion();
 		this.snapshotTree = snapHandler.makeSnapTree();
 		this.versionTree = diaHandler.makeVersionTree();
 		
@@ -60,8 +64,12 @@ public class VersionView extends HDVCS_UI {
 	 */
 	public void displaySnap(int sID) {
 		
-		//TODO: display snapshot 
-		//show
+		GraphReaderTXT Reader = new GraphReaderTXT();
+		Snapshot temp = snapHandler.getSnapshot(sID);
+		
+		StandardGraph newGraph = Reader.readString(temp.getSnapshot().getDiagram());
+		
+		this.display(newGraph);
 		
 	}
 	
@@ -73,9 +81,12 @@ public class VersionView extends HDVCS_UI {
 	 */
 	public void displayDiagram(int v) {
 		
-		//TODO: find correct diagram by using version.
-		//Diagram temp = versionTree.get(v);
-		//display(temp);
+		GraphReaderTXT Reader = new GraphReaderTXT();
+		Diagram temp = diaHandler.getDiagram(v);
+		
+		StandardGraph newGraph = Reader.readString(temp.getDiagram());
+		
+		this.display(newGraph);
 		
 	}
 	
@@ -112,8 +123,14 @@ public class VersionView extends HDVCS_UI {
 	 */
 	public void runDiff(int v1, int v2) {
 		
-		//TODO: run difference
-		//this.diffDiagram = difference(v1, v2);
+		GraphReaderTXT oldReader = new GraphReaderTXT();
+		GraphReaderTXT newReader = new GraphReaderTXT();
+		StandardGraph oldGraph = oldReader.readString(diaHandler.getDiagram(v1).getDiagram());
+		StandardGraph newGraph = newReader.readString(diaHandler.getDiagram(v2).getDiagram());
+		
+		GraphComparison compare = new GraphComparison();
+		compare.print(oldGraph, newGraph);
+		compare.display(oldGraph, newGraph);
 		
 	}
 	
@@ -125,9 +142,14 @@ public class VersionView extends HDVCS_UI {
 	 */
 	public void runSnapshot(int v) {
 		
-		//TODO: run snapshot.
-		//boolean state = snapshot(v);
+		Diagram temp = diaHandler.getDiagram(v);
+		snapHandler.snapshot(temp);
 		
+		GraphReaderTXT Reader = new GraphReaderTXT();
+		StandardGraph newGraph = Reader.readString(temp.getDiagram());
+		
+		this.display(newGraph);
+
 	}
 	
 	/**
@@ -138,8 +160,7 @@ public class VersionView extends HDVCS_UI {
 	 */
 	public void runDeleteVersion(int v) {
 		
-		//TODO: delete selected version of diagram.
-		//boolean state = deleteDiagram(v);
+		diaHandler.delDiagram(v);
 		
 	}
 	
@@ -151,6 +172,7 @@ public class VersionView extends HDVCS_UI {
 	 */
 	public int runVersionView() {
 		
+		this.lastSnapVersion = snapHandler.getSnapLastVersion();
 		InputStreamReader in=new InputStreamReader(System.in);
 	    BufferedReader br=new BufferedReader(in);
 		
@@ -160,62 +182,120 @@ public class VersionView extends HDVCS_UI {
 			System.out.println("1. Display version tree.");
 			System.out.println("2. Display snapshot tree.");
 			System.out.println("3. Display specific version of diagram");
-			System.out.println("4. Display specific version of snapshot.");
-			System.out.println("5. Change View.");
-			System.out.println("6. Stop program.");
+			System.out.println("4. Display specific ID of snapshot.");
+			System.out.println("5. Run diff between two version.");
+			System.out.println("6. Run snapshot.");
+			System.out.println("7. Delete specific version of diagram.");
+			System.out.println("8. Change View.");
+			System.out.println("9. Stop program.");
 			
 			System.out.print("Select : ");
 			
 			try {
-				select = System.in.read();
+				select = Integer.parseInt(br.readLine());
 			} catch (IOException e1) {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}
+			System.out.println("----------------------------");
+			System.out.println("");
 			
 			switch (select)
 			{
 			case 1:
-				try {
-					System.out.println("Enter alsolute path: ");
-					String p = br.readLine();
-					
-					this.loadLocal(p);
-					
-				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}	
+				this.displayVersionTree();
 				break;
 			
 			case 2:
+				this.displaySnapTree();
+				break;
+			
+			case 3:
 				try {
-					System.out.println("Enter load diagram version: ");
-					System.out.print("ID : ");
-					int v = br.read();
-						
-					this.loadDB(v);
+					System.out.println("Enter diagram version: ");
+					System.out.print("Version : ");
+					int v = Integer.parseInt(br.readLine());
+					
+					this.displayDiagram(v);
+					System.out.println("----------------------------");
+					System.out.println("");
 					
 				} catch (IOException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 				break;
-			
-			case 3:
-
-					System.out.println("Implemented exception.");
-
-				break;
 				
 			case 4:
-				this.runCommit();
+				try {
+					System.out.println("Enter snapshot ID: ");
+					System.out.print("ID : ");
+					int s = Integer.parseInt(br.readLine());
+					
+					this.displaySnap(s);
+					System.out.println("----------------------------");
+					System.out.println("");
+					
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 				break;
 				
 			case 5:
-				return 0;
+				try {
+					System.out.println("Enter two versions which will be differed: ");
+					System.out.print("Version 1 : ");
+					int v1 = Integer.parseInt(br.readLine());
+					System.out.print("Version 2 : ");
+					int v2 = Integer.parseInt(br.readLine());
+					
+					this.runDiff(v1, v2);
+					System.out.println("----------------------------");
+					System.out.println("");
+					
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				break;
 				
 			case 6:
+				try {
+					System.out.println("Enter diagram version which will be snapshoted: ");
+					System.out.print("Version : ");
+					int v = Integer.parseInt(br.readLine());
+					
+					this.runSnapshot(v);
+					System.out.println("----------------------------");
+					System.out.println("");
+					
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				break;
+				
+			case 7:
+				try {
+					System.out.println("Enter diagram version which will be deleted: ");
+					System.out.print("Version : ");
+					int v = Integer.parseInt(br.readLine());
+					
+					this.runDeleteVersion(v);
+					System.out.println("----------------------------");
+					System.out.println("");
+					
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				break;
+				
+			case 8:
+				return 0;
+				
+			case 9:
 				return 1;
 				
 			default:
