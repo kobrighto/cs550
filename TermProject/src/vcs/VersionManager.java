@@ -7,13 +7,16 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
+import standardGraph.StandardGraph;
+
 import jdbc.JDBC;
+import db.Snapshot;
 import db.Version;
 
 public class VersionManager {
 			
 	/** diagram List */
-	private List<Version> diagramList;
+	private List<Version> versionList;
 	
 	/** owner */
 	private String id;
@@ -29,9 +32,20 @@ public class VersionManager {
 	 */
 	public VersionManager() {
 		
-		diagramList = new ArrayList<Version>();
+		versionList = new ArrayList<Version>();
 		id = null;
 		lastVersion = 0;
+		
+	}
+	
+	/**
+	 * set Owner
+	 * 
+	 * @param String id
+	 * @return 
+	 */
+	public void setOwner(String i) {
+		this.id = i;
 		
 	}
 	
@@ -221,14 +235,34 @@ public class VersionManager {
 	 * make version tree by using diagramList
 	 * 
 	 * @param 
-	 * @return Diagram versionTree
+	 * @return StandardGraph versionTree
 	 */
-	public Version makeVersionTree() {
+	public StandardGraph makeVersionTree() {
 		
-		//TODO: make version tree
-		//this.diagram = versionTree();
+		StandardGraph snapTree = null;
 		
-		return diagram;
+		try{
+			Connection conn=JDBC.getConnection();
+			PreparedStatement prestatement=conn.prepareStatement("select * from version where owner=?");
+			prestatement.setString(1, this.id);
+			ResultSet rs = prestatement.executeQuery();
+			while(rs.next()){
+				String did=rs.getString("did");
+				String dia=rs.getString("version");
+				String own=rs.getString("owner");
+				String vc=rs.getString("vcomment");
+				Version ver=new Version(did,dia,vc);
+				versionList.add(ver);	
+			}
+			
+			
+			//TODO: make version tree
+			System.out.println("Make snapshotTree is completed");
+		}catch(Exception e){
+			System.out.println("Make snapshotTree error!");
+		}
+		
+		return snapTree;
 	}
 	
 	/**

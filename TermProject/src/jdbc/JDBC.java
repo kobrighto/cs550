@@ -11,7 +11,7 @@ public class JDBC {
 	static final String user = "root";
 	static final String password = "digger";
 	
-	public Connection createConnection(){
+	public static Connection getConnection(){
 		try{
 			// Load MySQL Java driver
 			Class.forName(JDBC_Driver);
@@ -28,6 +28,7 @@ public class JDBC {
 		return null;
 	}
 	
+	/*
 	public ResultSet executeQuery(Connection conn, String statement){
 		try{
 			// Execute a query
@@ -41,4 +42,5 @@ public class JDBC {
 		}		
 		return null;
 	}
+	*/
 }

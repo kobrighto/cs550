@@ -95,11 +95,11 @@ public class HDVCS_UI {
 		else
 		{
 			System.out.println("Login completed!!");
-			diaHandler.loadDiaData(logView.getId());
-			snapHandler.loadSnapData(logView.getId());
+			diaHandler.setOwner(logView.getId());
+			snapHandler.setOwner(logView.getId());
 		}
 		
-		DiagramView diaView = new DiagramView();
+		SnapshotView snapView = new SnapshotView();
 		VersionView verView = new VersionView();
 		
 		while (running)

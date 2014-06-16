@@ -35,6 +35,17 @@ public class SnapshotManager {
 		id = null;
 		lastSnapshot = 0;
 	}
+	
+	/**
+	 * set Owner
+	 * 
+	 * @param String id
+	 * @return 
+	 */
+	public void setOwner(String i) {
+		this.id = i;
+		
+	}
 		
 	/**
 	 * getSnapshot.

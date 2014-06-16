@@ -6,7 +6,7 @@ public class Test {
 	public static void main (String[] args){
 		try{
 			JDBC jdbc = new JDBC();
-			Connection conn = jdbc.createConnection();
+			Connection conn = jdbc.getConnection();
 			String statement = "select * from user";
 			ResultSet rs = jdbc.executeQuery(conn, statement);
 			while (rs.next()){
