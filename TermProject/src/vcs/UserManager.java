@@ -3,8 +3,6 @@ package vcs;
 import java.util.ArrayList;
 import java.util.List;
 
-import cp.HDVCS_UI.handleType;
-import cp.HDVCS_UI.viewStyle;
 import db.User;
 
 public class UserManager {

@@ -16,10 +16,6 @@ public class VersionView extends HDVCS_UI {
 	/** viewStyle */
 	private viewStyle style;
 		
-	/** handleType */
-	private DiagramManager diaHandler;
-	private SnapshotManager snapHandler;
-		
 	/** current diagram */
 	private Diagram curDiagram;
 	

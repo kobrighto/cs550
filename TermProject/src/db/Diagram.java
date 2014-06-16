@@ -1,9 +1,11 @@
 package db;
 
+import standardGraph.StandardGraph;
+
 public class Diagram {
 		
 	/** diagram */
-	private String diagram;
+	private StandardGraph diagram;
 	
 	/** version */
 	private int version;
@@ -14,7 +16,7 @@ public class Diagram {
 	 * @param .
 	 * @return 
 	 */
-	public Diagram(String d, int v) {
+	public Diagram(StandardGraph d, int v) {
 		
 		this.diagram = d;
 		this.version = v;

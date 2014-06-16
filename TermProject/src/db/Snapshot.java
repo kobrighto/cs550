@@ -1,9 +1,11 @@
 package db;
 
+import standardGraph.StandardGraph;
+
 public class Snapshot {
 
 	/** snapshot */
-	private Diagram snapshot;
+	private StandardGraph snapshot;
 	
 	/** version */
 	private int version;
@@ -14,7 +16,7 @@ public class Snapshot {
 	 * @param .
 	 * @return 
 	 */
-	public Snapshot(Diagram s, int v) {
+	public Snapshot(StandardGraph s, int v) {
 		
 		this.snapshot = s;
 		this.version = v;
