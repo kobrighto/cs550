@@ -19,16 +19,18 @@ public class Snapshot {
 	/**
 	 * constructor to set snapshot and version.
 	 * 
-	 * @param .
+	 * @param 
 	 * @return 
 	 */
 	public Snapshot(){
 		
 	}
-	public Snapshot(Version v, int sid) {
+	
+	public Snapshot(Version v, int sid, String sc) {
 		
 		this.version = v;
 		this.sId = sid;
+		this.scomment = new String(sc);
 		
 	}
 

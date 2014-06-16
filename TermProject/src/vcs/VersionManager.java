@@ -1,5 +1,8 @@
 package vcs;
 
+import graphIO.GraphReaderTXT;
+import graphView.JungViewer;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -7,10 +10,10 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
+import standardGraph.GraphComparison;
 import standardGraph.StandardGraph;
 
 import jdbc.JDBC;
-import db.Snapshot;
 import db.Version;
 
 public class VersionManager {
@@ -48,111 +51,32 @@ public class VersionManager {
 		this.id = i;
 		
 	}
-	
-	/**
-	 * load diagram from DB.
-	 * 
-	 * @param String id
-	 * @return boolean state
-	 */
-	public boolean loadDiaData(String i) {
-		
-		boolean state = false;
-		this.id=i;
 
-		//TODO: Log in into DB and get Diagrams.
-		
-		//this.diagramList = loadDia();
-		try{
-			Connection conn=JDBC.getConnection();
-			PreparedStatement prestatement=conn.prepareStatement("select * from diagram where owner=?");
-			prestatement.setString(1, this.id);
-			ResultSet rs = prestatement.executeQuery();
-			while(rs.next()){
-				int ver=rs.getInt("version");
-				String dia=rs.getString("matrix");
-				String own=rs.getString("owner");
-				Version diag=new Version(ver,dia);
-				diagramList.add(diag);				
-			}
-			System.out.println("Get diagramList is completed");
-			state=true;
-		}catch(Exception e){
-			System.out.println("Get diagramList error!");
-		}
-		return state;
-	}
-	
-	/**
-	 * load diagram from DB.
-	 * 
-	 * @param String id
-	 * @param String pass
-	 * @return boolean state
-	 */
-	public boolean refresh(String i, String p) {
-		
-		boolean state = false;
-		this.id=i;
-		this.pw=p;
-		//TODO: Log in into DB and get Diagrams.
-		
-		//this.diagramList = loadDia();
-		try{
-			Connection conn=JDBC.getConnection();
-			PreparedStatement prestatement=conn.prepareStatement("select * from diagram where owner=?");
-			prestatement.setString(1, this.id);
-			ResultSet rs = prestatement.executeQuery();
-			while(rs.next()){
-				int ver=rs.getInt("version");
-				String dia=rs.getString("matrix");
-				String own=rs.getString("owner");
-				Version diag=new Version(ver,dia);
-				diagramList.add(diag);				
-			}
-			System.out.println("Get diagramList is completed");
-			state=true;
-		}catch(Exception e){
-			System.out.println("Get diagramList error!");
-		}
-		return state;
-	}
-	
 	/**
 	 * getDiagram.
 	 * 
 	 * @param int version
 	 * @return Diagram diagram
 	 */
-	public Version getVersion(int v) {
+	public Version getVersion(String did) {
 		
-		//TODO: get Diagrams.
-		//this.diagram = this.diagramList.get(v);
-		Version version=null;
-		//diagram=this.diagramList.get(v);
-		for(Version d:diagramList){
-			if(d.getdID()==v)
-				diagram=d;
-		}
-		/*NO DB, JUST USE LIST
-		 * Diagram diagram=null;
+		Version version = null;
+
 		try{
 			Connection conn=JDBC.getConnection();
-			PreparedStatement prestatement=conn.prepareStatement("select * from diagram where version=?");
-			prestatement.setInt(1, v);
+			PreparedStatement prestatement=conn.prepareStatement("select * from version where did=?");
+			prestatement.setString(1, did);
 			ResultSet rs = prestatement.executeQuery();
-			diagram=new Diagram();
-			while(rs.next()){
-				diagram.setVersion(rs.getInt("version"));
-				diagram.setDiagram(rs.getString("matrix"));
-				System.out.println("rs: "+rs.getString("matrix"));
-			}
+			
+			rs.next();
+			
+			version=new Version(rs.getString("did"), rs.getString("diagram"), rs.getString("vcomment"));
+			
 			System.out.println("Get diagram is completed");
 		}catch(Exception e){
 			System.out.println("Get diagram error!");
 		}
-		*/
-		return diagram;
+		return version;
 	}
 
 	/**
@@ -161,21 +85,20 @@ public class VersionManager {
 	 * @param Diagram diagram
 	 * @return boolean state
 	 */
-	public boolean commit(Version v) {
+	public boolean commit(Version v, String vc) {
 		
 		boolean state = false;
-		//TODO: commit
-		// Insert Diagram into diagramList and DB.
-		//TODO: insert diagram
 		
 		//db starts
 		try{
 			Connection conn=JDBC.getConnection();
 			
-			PreparedStatement prestatement=conn.prepareStatement("insert into diagram (version, diagram, owner) values (?,?,?)");
-			prestatement.setInt(1,this.getDiaLastVersion()+1);
+			PreparedStatement prestatement=conn.prepareStatement("insert into version (did, diagram, owner, vcomment) values (?,?,?,?)");
+			//TODO:Set valid did
+			//prestatement.setInt(1,this.getDiaLastVersion()+1);
 			prestatement.setString(2, v.getDiagram());
 			prestatement.setString(3,this.id);
+			prestatement.setString(4,vc);
 			prestatement.executeUpdate();
 			
 			state=true;
@@ -191,39 +114,43 @@ public class VersionManager {
 	/**
 	 * difference and return diagram.
 	 * 
-	 * @param string path
-	 * @return Diagram diffDiagram
+	 * @param string d1
+	 * @param string d2
+	 * @return 
 	 */
-	public Version difference(int v1, int v2) {
+	public void difference(String d1, String d2) {
 		
-		//TODO: difference
-		//diagram = diffdiagram();
+		GraphReaderTXT oldReader = new GraphReaderTXT();
+		GraphReaderTXT newReader = new GraphReaderTXT();
+		StandardGraph oldGraph = oldReader.readString(this.getVersion(d1).getDiagram());
+		StandardGraph newGraph = newReader.readString(this.getVersion(d2).getDiagram());
 		
-		return diagram;
+		GraphComparison compare = new GraphComparison();
+		compare.print(oldGraph, newGraph);
+		compare.display(oldGraph, newGraph);
+
 	}	
 	
 	/**
 	 * Delete diagram from DB.
 	 * 
-	 * @param int version
+	 * @param String did
 	 * @return boolean state
 	 */
-	public boolean delVersion(int v) {
+	public boolean delVersion(String d) {
 		
 		boolean state = false;
-		//TODO: delete
-		//delete from diagramList and DB.
-		//TODO: delete from diagramList
 		
 		//Delete from DB
 		try{
 			Connection conn=JDBC.getConnection();
 
-			PreparedStatement prestatement=conn.prepareStatement("delete from diagram where version=? and owner=?");
-			prestatement.setInt(1, v);
+			PreparedStatement prestatement=conn.prepareStatement("delete from version where did=? and owner=?");
+			prestatement.setString(1, d);
 			prestatement.setString(2, this.id);
 			prestatement.executeUpdate();
 			
+			state = true;
 			System.out.println("Delete version is completed");
 		}catch(Exception e){
 			System.out.println("Delete version error!");
@@ -268,10 +195,10 @@ public class VersionManager {
 	/**
 	 * Send last version of diagram to versionView.
 	 * 
-	 * @param 
-	 * @return int lastVersion
+	 * @param String branch header
+	 * @return String lastVersion
 	 */
-	public int getDiaLastVersion() {
+	public int getDiaLastVersion(String bh) {
 		
 		//TODO: find last version of each user's diagram.
 		//lastVersion = ~~;
@@ -289,6 +216,46 @@ public class VersionManager {
 		}
 				
 		return lastVersion;
+	}
+
+	/**
+	 * make branch and commit branch header.
+	 * 
+	 * @param String did
+	 * @param String branch name
+	 * @return boolean state
+	 */
+	public boolean makeBranch(String d, String bn) {
+		String branchHeaderId = d + ".1";
+		Version v = this.getVersion(d);
+		
+		boolean state = false;
+		
+		//db starts
+		try{
+			Connection conn=JDBC.getConnection();
+			
+			PreparedStatement prestatement=conn.prepareStatement("insert into version (did, diagram, owner, vcomment) values (?,?,?,?)");
+			prestatement.setString(1,branchHeaderId);
+			prestatement.setString(2,v.getDiagram());
+			prestatement.setString(3,this.id);
+			prestatement.setString(4,bn);
+			prestatement.executeUpdate();
+			
+			state=true;
+			System.out.println("Make branch is completed");
+		}catch(Exception e){
+			e.printStackTrace();
+			System.out.println("Make branch error!");
+		}
+		
+		return state;
+		
+	}
+
+	public void changeBranch(String vn) {
+		
+		
 	}
 	
 }

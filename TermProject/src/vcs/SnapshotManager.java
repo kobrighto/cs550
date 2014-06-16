@@ -64,12 +64,11 @@ public class SnapshotManager {
 			prestatement.setInt(1, sid);
 			ResultSet rs = prestatement.executeQuery();
 			
-			while(rs.next()){
-				version=new Version(rs.getString("did"), rs.getString("diagram"));
-				snapshot=new Snapshot();
-				snapshot.setVersion(version);
-				snapshot.setsID(rs.getInt("snapid"));
-			}
+			rs.next();
+		
+			version=new Version(rs.getString("did"), rs.getString("diagram"), null);
+			snapshot=new Snapshot(version, rs.getInt("sid"), rs.getString("scomment"));
+
 			System.out.println("Get diagram is completed");
 		}catch(Exception e){
 			System.out.println("Get diagram error!");
@@ -84,7 +83,7 @@ public class SnapshotManager {
 	 * @param int version
 	 * @return boolean state
 	 */
-	public boolean snapshot(Version d) {
+	public boolean snapshot(Version d, String sc) {
 		
 		boolean state = false;
 		
@@ -92,11 +91,12 @@ public class SnapshotManager {
 		try{
 			Connection conn=JDBC.getConnection();
 			
-			PreparedStatement prestatement=conn.prepareStatement("insert into snapshot (sid, did, diagram, owner) values (?,?,?,?)");
+			PreparedStatement prestatement=conn.prepareStatement("insert into snapshot (sid, did, diagram, owner, scomment) values (?,?,?,?,?)");
 			prestatement.setInt(1,this.getSnapLastVersion() + 1);
 			prestatement.setString(2,d.getdID());
 			prestatement.setString(3,d.getDiagram());
 			prestatement.setString(4,this.id);
+			prestatement.setString(5,sc);
 			prestatement.executeUpdate();
 			
 			System.out.println("store snapshot is completed");
@@ -129,8 +129,9 @@ public class SnapshotManager {
 				String did=rs.getString("did");
 				String dia=rs.getString("version");
 				String own=rs.getString("owner");
-				Version ver=new Version(did,dia);
-				Snapshot snap=new Snapshot(ver,sid);
+				String sc=rs.getString("scomment");
+				Version ver=new Version(did,dia,null);
+				Snapshot snap=new Snapshot(ver,sid,sc);
 				snapshotList.add(snap);	
 			}
 			

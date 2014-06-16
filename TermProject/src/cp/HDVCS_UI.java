@@ -22,7 +22,7 @@ public class HDVCS_UI {
 	public enum  handleType {LOGIN, VERSION, SNAPSHOT};
 		
 	/** handler */
-	protected VersionManager diaHandler = new VersionManager();
+	protected VersionManager verHandler = new VersionManager();
 	protected SnapshotManager snapHandler = new SnapshotManager();
 	protected UserManager userHandler = new UserManager();
 	
@@ -95,7 +95,7 @@ public class HDVCS_UI {
 		else
 		{
 			System.out.println("Login completed!!");
-			diaHandler.setOwner(logView.getId());
+			verHandler.setOwner(logView.getId());
 			snapHandler.setOwner(logView.getId());
 		}
 		
@@ -126,7 +126,7 @@ public class HDVCS_UI {
 			switch (select)
 			{
 			case 1:
-				isfinish = diaView.runDiagramView();
+				isfinish = verView.runVersionView();
 				if (isfinish == 0)
 					break;
 				else if (isfinish == 1)
