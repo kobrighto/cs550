@@ -1,5 +1,7 @@
 package cp;
 
+import graphIO.GraphReaderTXT;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -15,7 +17,7 @@ public class DiagramView extends HDVCS_UI {
 	private viewStyle style;
 		
 	/** current diagram */
-	private StandardGraph curDiagram;
+	private Diagram curDiagram;
 	
 	/** password */
 	private int lastDiaVersion;
@@ -44,21 +46,28 @@ public class DiagramView extends HDVCS_UI {
 	 */
 	public void loadLocal(String p) {
 		
-		//TODO: load diagram from local
-		//this.curDiagram = loadL(String p);
+		GraphReaderTXT Reader = new GraphReaderTXT();
+
+		StandardGraph newGraph = Reader.readTextFile(p);
+		
+		this.display(newGraph);
 		
 	}
 	
 	/**
 	 * load diagram from DB.
 	 * 
-	 * @param string path.
+	 * @param integer version.
 	 * @return 
 	 */
-	public void loadDB(String p) {
+	public void loadDB(int v) {
 		
-		//TODO: load diagram from DB
-		//this.curDiagram = loadD(String p);
+		GraphReaderTXT Reader = new GraphReaderTXT();
+		this.curDiagram = diaHandler.getDiagram(v);
+		
+		StandardGraph newGraph = Reader.readString(this.curDiagram.getDiagram());
+		
+		this.display(newGraph);
 		
 	}
 	
@@ -83,8 +92,13 @@ public class DiagramView extends HDVCS_UI {
 	 */
 	public void runCommit() {
 		
-		//TODO: run commit
-		//commit(Diagram curDiagram);
+		diaHandler.commit(curDiagram);
+		
+		GraphReaderTXT Reader = new GraphReaderTXT();
+		
+		StandardGraph newGraph = Reader.readString(this.curDiagram.getDiagram());
+		
+		this.display(newGraph);
 		
 	}
 	
@@ -92,7 +106,7 @@ public class DiagramView extends HDVCS_UI {
 	 * run LoginView.
 	 * 
 	 * @param 
-	 * @return intgeger next do
+	 * @return integer next do
 	 */
 	public int runDiagramView() {
 		
@@ -105,7 +119,7 @@ public class DiagramView extends HDVCS_UI {
 			System.out.println("1. Load local diagram.");
 			System.out.println("2. Load DB diagram.");
 			System.out.println("3. New diagram");
-			System.out.println("4. Delete diagram.");
+			System.out.println("4. Commit current diagram.");
 			System.out.println("5. Change View.");
 			System.out.println("6. Stop program.");
 			
@@ -122,14 +136,10 @@ public class DiagramView extends HDVCS_UI {
 			{
 			case 1:
 				try {
-					System.out.println("Enter alsolute path");
-					System.out.print("ID : ");
-					String i = br.readLine();
-					
-					System.out.print("PASS : ");
+					System.out.println("Enter alsolute path: ");
 					String p = br.readLine();
-						
-					this.runAuthenticate(i, p);
+					
+					this.loadLocal(p);
 					
 				} catch (IOException e) {
 					// TODO Auto-generated catch block
@@ -139,14 +149,11 @@ public class DiagramView extends HDVCS_UI {
 			
 			case 2:
 				try {
-					System.out.println("Enter New ID & PASS");
+					System.out.println("Enter load diagram version: ");
 					System.out.print("ID : ");
-					String i = br.readLine();
-					
-					System.out.print("PASS : ");
-					String p = br.readLine();
+					int v = br.read();
 						
-					this.runNewUser(i, p);
+					this.loadDB(v);
 					
 				} catch (IOException e) {
 					// TODO Auto-generated catch block
@@ -155,46 +162,20 @@ public class DiagramView extends HDVCS_UI {
 				break;
 			
 			case 3:
-				try {
-					System.out.println("Enter Delete ID & PASS");
-					System.out.print("ID : ");
-					String i = br.readLine();
-					
-					System.out.print("PASS : ");
-					String p = br.readLine();
-						
-					this.runDelUser(i, p);
-					
-				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
+
+					System.out.println("Implemented exception.");
+
 				break;
 				
 			case 4:
-				try {
-					System.out.println("Enter Delete ID & PASS");
-					System.out.print("ID : ");
-					String i = br.readLine();
-					
-					System.out.print("PASS : ");
-					String p = br.readLine();
-						
-					this.runDelUser(i, p);
-					
-				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
+				this.runCommit();
 				break;
 				
 			case 5:
 				return 0;
-				break;
 				
 			case 6:
 				return 1;
-				break;
 				
 			default:
 				System.out.println("Select correct number.");

@@ -23,6 +23,11 @@ import standardGraph.*;
 public class GraphReaderTXT {
 	StandardGraph newGraph = new StandardGraph();
 	
+	public StandardGraph readString(String diagram) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	
 	public StandardGraph readTextFile(String path){
 		boolean isDirected = false;		
 		BufferedReader br = null;
@@ -117,4 +122,6 @@ public class GraphReaderTXT {
 			return true;			
 		}
 	}
+
+	
 }

@@ -108,7 +108,7 @@ public class DiagramManager {
 	 * @param Diagram diagram
 	 * @return boolean state
 	 */
-	public boolean commit(Diagram d, int v) {
+	public boolean commit(Diagram d) {
 		
 		boolean state = false;
 		//TODO: commit

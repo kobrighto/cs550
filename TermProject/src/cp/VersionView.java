@@ -154,12 +154,15 @@ public class VersionView extends HDVCS_UI {
 		InputStreamReader in=new InputStreamReader(System.in);
 	    BufferedReader br=new BufferedReader(in);
 		
-		while (!state)
+		while (true)
 		{
 			int select = -1;
-			System.out.println("1. Login.");
-			System.out.println("2. New User.");
-			System.out.println("3. Delete User");
+			System.out.println("1. Display version tree.");
+			System.out.println("2. Display snapshot tree.");
+			System.out.println("3. Display specific version of diagram");
+			System.out.println("4. Display specific version of snapshot.");
+			System.out.println("5. Change View.");
+			System.out.println("6. Stop program.");
 			
 			System.out.print("Select : ");
 			
@@ -174,14 +177,10 @@ public class VersionView extends HDVCS_UI {
 			{
 			case 1:
 				try {
-					System.out.println("Enter ID & PASS");
-					System.out.print("ID : ");
-					String i = br.readLine();
-					
-					System.out.print("PASS : ");
+					System.out.println("Enter alsolute path: ");
 					String p = br.readLine();
-						
-					this.runAuthenticate(i, p);
+					
+					this.loadLocal(p);
 					
 				} catch (IOException e) {
 					// TODO Auto-generated catch block
@@ -191,14 +190,11 @@ public class VersionView extends HDVCS_UI {
 			
 			case 2:
 				try {
-					System.out.println("Enter New ID & PASS");
+					System.out.println("Enter load diagram version: ");
 					System.out.print("ID : ");
-					String i = br.readLine();
-					
-					System.out.print("PASS : ");
-					String p = br.readLine();
+					int v = br.read();
 						
-					this.runNewUser(i, p);
+					this.loadDB(v);
 					
 				} catch (IOException e) {
 					// TODO Auto-generated catch block
@@ -207,30 +203,27 @@ public class VersionView extends HDVCS_UI {
 				break;
 			
 			case 3:
-				try {
-					System.out.println("Enter Delete ID & PASS");
-					System.out.print("ID : ");
-					String i = br.readLine();
-					
-					System.out.print("PASS : ");
-					String p = br.readLine();
-						
-					this.runDelUser(i, p);
-					
-				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-				break;
 
+					System.out.println("Implemented exception.");
+
+				break;
+				
+			case 4:
+				this.runCommit();
+				break;
+				
+			case 5:
+				return 0;
+				
+			case 6:
+				return 1;
+				
 			default:
 				System.out.println("Select correct number.");
 				break;
 			}	
 	
 		}
-		
-		return state;
 		
 	}
 

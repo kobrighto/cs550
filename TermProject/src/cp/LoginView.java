@@ -100,8 +100,8 @@ public class LoginView extends HDVCS_UI {
 		{
 			int select = -1;
 			System.out.println("1. Login.");
-			System.out.println("2. New User.");
-			System.out.println("3. Delete User");
+			System.out.println("2. New user.");
+			System.out.println("3. Delete user");
 			
 			System.out.print("Select : ");
 			
@@ -133,7 +133,7 @@ public class LoginView extends HDVCS_UI {
 			
 			case 2:
 				try {
-					System.out.println("Enter New ID & PASS");
+					System.out.println("Enter new ID & PASS");
 					System.out.print("ID : ");
 					String i = br.readLine();
 					
@@ -150,7 +150,7 @@ public class LoginView extends HDVCS_UI {
 			
 			case 3:
 				try {
-					System.out.println("Enter Delete ID & PASS");
+					System.out.println("Enter delete ID & PASS");
 					System.out.print("ID : ");
 					String i = br.readLine();
 					
