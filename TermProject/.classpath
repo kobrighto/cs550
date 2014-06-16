@@ -9,5 +9,6 @@
 	<classpathentry kind="lib" path="lib/jung-api-2.0.1.jar"/>
 	<classpathentry kind="lib" path="lib/jung-graph-impl-2.0.1.jar"/>
 	<classpathentry kind="lib" path="lib/jung-visualization-2.0.1.jar"/>
+	<classpathentry kind="lib" path="I:/seproject/git/cs550/TermProject/lib/mysql-connector-java-5.1.31-bin.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
