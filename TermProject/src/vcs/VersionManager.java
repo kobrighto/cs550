@@ -108,8 +108,8 @@ public class VersionManager {
 			
 			PreparedStatement prestatement=conn.prepareStatement("insert into version (id, owner, did, diagram, vcomment) values (null,?,?,?,?)");
 			
-			System.out.println("Now curBranch : " + curBranch); //debug
-			System.out.println("Now last Branch : " + this.getLatestBranch(curBranch)); //debug
+			//System.out.println("Now curBranch : " + curBranch); //debug
+			//System.out.println("Now last Branch : " + this.getLatestBranch(curBranch)); //debug
 			if ((this.getLatestBranch(curBranch).length() == 0))
 			{
 				temp = curBranch;
@@ -122,14 +122,14 @@ public class VersionManager {
 				temp = (this.getLatestBranch(curBranch).substring(0,this.getLatestBranch(curBranch).length()-1)) + String.valueOf(lastPlus);
 				versionTree.add(temp);
 				
-				System.out.println("Now version : " + last +"    "+lastPlus+"    "+temp); //debug
+				//System.out.println("Now version : " + last +"    "+lastPlus+"    "+temp); //debug
 			}
 			
 			prestatement.setString(1,this.id);
 			prestatement.setString(2,temp);
 			prestatement.setString(3, v.getDiagram());
 			prestatement.setString(4,vc);
-			System.out.println(prestatement.toString());
+			//System.out.println(prestatement.toString());	//debug
 			prestatement.executeUpdate();
 			
 			state=true;
@@ -244,7 +244,7 @@ public class VersionManager {
 				versionTree.add(versions.get(i));
 			}
 		}
-		System.out.println(versionTree.toString()); //debug
+		//System.out.println(versionTree.toString()); //debug
 
 	}
 
@@ -266,7 +266,7 @@ public class VersionManager {
 			while(rs.next()){
 				String did=rs.getString("did");
 				temp.add(did);
-				System.out.println("Exist did : " + did);
+				//System.out.println("Exist did : " + did);	//debug
 			}
 			
 			this.sortVersionTree(temp);
