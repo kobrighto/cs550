@@ -46,12 +46,18 @@ public class UserManager {
 			PreparedStatement prestatement=conn.prepareStatement("select * from user where username=?");
 			prestatement.setString(1,i);
 			ResultSet rs=prestatement.executeQuery();
-			while(rs.next()){
+			if(rs.next()){
 				String password=rs.getString("password");
-				if(p.equals(password)) return true; 
+				if(p.equals(password)) 
+					return true; 
+				else 
+					System.out.println("Pass is not correct.");
+			}
+			else
+			{
+				System.out.println("Id is not exist.");
 			}
 			
-			System.out.println("authentication is completed");
 		}catch(Exception e){
 			System.out.println("authentication error!");
 			return false;

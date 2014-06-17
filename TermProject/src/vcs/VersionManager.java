@@ -103,13 +103,22 @@ public class VersionManager {
 		//db starts
 		try{
 			Connection conn=JDBC.getConnection();
+			String last = "";
+			String temp = "";
 			
 			PreparedStatement prestatement=conn.prepareStatement("insert into version (id, owner, did, diagram, vcomment) values (null,?,?,?,?)");
 			
-			String last = this.getLatestBranch(curBranch).substring(this.getLatestBranch(curBranch).length()-1);
-			int lastPlus = Integer.parseInt(last) + 1;
-			String temp = (this.getLatestBranch(curBranch).substring(0,this.getLatestBranch(curBranch).length()-1)) + String.valueOf(lastPlus);
-				
+			if (curBranch.equals("1"))
+			{
+				 temp = "1";
+			}
+			else 
+			{
+				last = this.getLatestBranch(curBranch).substring((this.getLatestBranch(curBranch).length()-1));
+				int lastPlus = Integer.parseInt(last) + 1;
+				temp = (this.getLatestBranch(curBranch).substring(0,this.getLatestBranch(curBranch).length()-1)) + String.valueOf(lastPlus);
+			}
+			
 			prestatement.setString(1,this.id);
 			prestatement.setString(2,temp);
 			prestatement.setString(3, v.getDiagram());
