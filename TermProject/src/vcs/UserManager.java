@@ -43,7 +43,7 @@ public class UserManager {
 		try{
 			Connection conn=JDBC.getConnection();
 			
-			PreparedStatement prestatement=conn.prepareStatement("select * from user where id=?");
+			PreparedStatement prestatement=conn.prepareStatement("select * from user where username=?");
 			prestatement.setString(1,i);
 			ResultSet rs=prestatement.executeQuery();
 			while(rs.next()){
@@ -74,7 +74,7 @@ public class UserManager {
 		try{
 			Connection conn=JDBC.getConnection();
 			
-			PreparedStatement prestatement=conn.prepareStatement("insert into user values (?,?)");
+			PreparedStatement prestatement=conn.prepareStatement("insert into user values (null,?,?)");
 			prestatement.setString(1,i);
 			prestatement.setString(2,p);
 			//prestatement.setInt(3,0); //number of the diagrams
@@ -101,13 +101,19 @@ public class UserManager {
 		//TODO: delete a user in DB.
 		try{
 			Connection conn=JDBC.getConnection();
-			
-			PreparedStatement prestatement=conn.prepareStatement("delete from user where id=? and password=?");
+			PreparedStatement prestatement=conn.prepareStatement("select * from user where username=? and password=?");
 			prestatement.setString(1,i);
 			prestatement.setString(2,p);
-			prestatement.executeUpdate();
-			state=true;
-			System.out.println("User deletion is completed");
+			ResultSet rs=prestatement.executeQuery();
+			if(rs.next()){
+				prestatement=conn.prepareStatement("delete from user where username=? and password=?");
+				prestatement.setString(1,i);
+				prestatement.setString(2,p);
+				prestatement.executeUpdate();
+				state=true;
+				System.out.println("User deletion is completed");
+			}else
+				System.out.println("There is no user with id:"+i+ " and password: "+p);
 		}catch(Exception e){
 			System.out.println("User deletion error!");
 		}

@@ -21,9 +21,9 @@ public class HDVCS_UI {
 	public enum  handleType {LOGIN, VERSION, SNAPSHOT};
 		
 	/** handler */
-	protected VersionManager verHandler = new VersionManager();
-	protected SnapshotManager snapHandler = new SnapshotManager();
-	protected UserManager userHandler = new UserManager();
+	static protected VersionManager verHandler =null;
+	static protected SnapshotManager snapHandler = null;
+	static protected UserManager userHandler = null;
 	
 	/** state of login */
 	private boolean running = false;
@@ -85,6 +85,10 @@ public class HDVCS_UI {
 		InputStreamReader in=new InputStreamReader(System.in);
 	    BufferedReader br=new BufferedReader(in);
 	    
+	    verHandler = new VersionManager();
+		snapHandler = new SnapshotManager();
+		userHandler = new UserManager();
+		
 		this.running = true;
 		boolean state = false;
 		LoginView logView = new LoginView();

@@ -59,11 +59,12 @@ public class VersionView extends HDVCS_UI {
 		
 		GraphReaderTXT Reader = new GraphReaderTXT();
 		Version temp = verHandler.getVersion(d);
+		if(temp!=null)
+		{	StandardGraph newGraph = Reader.readString(temp.getDiagram());
 		
-		StandardGraph newGraph = Reader.readString(temp.getDiagram());
-		
-		this.display(newGraph);
-		
+			this.display(newGraph);
+		}
+	
 	}
 	
 	/**
@@ -92,13 +93,21 @@ public class VersionView extends HDVCS_UI {
 		StandardGraph newGraph = Reader.readTextFile(p);
 		
 		try {
-			this.curDiagram = new Version(null, readFile(p), null);
+			String temp=null;
+			temp=readFile(p);
+			if(temp!=null){
+				this.curDiagram = new Version(null, temp, null);
+				this.display(newGraph);
+			}
+			else{
+				System.out.println("There is no file "+p );
+			}
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			//e.printStackTrace();
 		}
 		
-		this.display(newGraph);
+		
 		
 	}
 	
@@ -122,7 +131,8 @@ public class VersionView extends HDVCS_UI {
 	 */
 	public void runCommit(String vc) {
 		
-		verHandler.commit(curDiagram, vc);
+		if(curDiagram==null) System.out.println("There is no current diagram");
+		else	verHandler.commit(curDiagram, vc);
 		
 	}
 	
@@ -200,6 +210,7 @@ public class VersionView extends HDVCS_UI {
 					String v = br.readLine();
 					
 					this.displayVersion(v);
+					
 					System.out.println("----------------------------");
 					System.out.println("");
 					
@@ -255,7 +266,7 @@ public class VersionView extends HDVCS_UI {
 					
 				} catch (IOException e) {
 					// TODO Auto-generated catch block
-					e.printStackTrace();
+				//	e.printStackTrace();
 				}	
 				break;
 				

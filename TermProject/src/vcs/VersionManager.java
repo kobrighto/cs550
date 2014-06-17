@@ -71,12 +71,16 @@ public class VersionManager {
 			PreparedStatement prestatement=conn.prepareStatement("select * from version where did=?");
 			prestatement.setString(1, did);
 			ResultSet rs = prestatement.executeQuery();
-			
-			rs.first();
-			
-			version=new Version(rs.getString("did"), rs.getString("diagram"), rs.getString("vcomment"));
-			
-			System.out.println("Get diagram is completed");
+			if(rs.first()){
+				//rs.first();
+				
+				version=new Version(rs.getString("did"), rs.getString("diagram"), rs.getString("vcomment"));
+				
+				System.out.println("Get diagram is completed");
+			}
+			else{
+				System.out.println("There is no version "+did);
+			}
 		}catch(Exception e){
 			System.out.println("Get diagram error!");
 		}
@@ -97,16 +101,17 @@ public class VersionManager {
 		try{
 			Connection conn=JDBC.getConnection();
 			
-			PreparedStatement prestatement=conn.prepareStatement("insert into version (did, diagram, owner, vcomment) values (?,?,?,?)");
+			PreparedStatement prestatement=conn.prepareStatement("insert into version (id, owner, did, diagram, vcomment) values (null,?,?,?,?)");
 			
 			String last = this.getLatestBranch(vc).substring(this.getLatestBranch(vc).length()-1);
 			int lastPlus = Integer.parseInt(last) + 1;
 			String temp = (this.getLatestBranch(vc).substring(0,this.getLatestBranch(vc).length()-1)) + String.valueOf(lastPlus);
 				
-			prestatement.setString(1,temp);
-			prestatement.setString(2, v.getDiagram());
-			prestatement.setString(3,this.id);
+			prestatement.setString(1,this.id);
+			prestatement.setString(2,temp);
+			prestatement.setString(3, v.getDiagram());
 			prestatement.setString(4,vc);
+			System.out.println(prestatement.toString());
 			prestatement.executeUpdate();
 			
 			state=true;
@@ -152,14 +157,22 @@ public class VersionManager {
 		//Delete from DB
 		try{
 			Connection conn=JDBC.getConnection();
-
-			PreparedStatement prestatement=conn.prepareStatement("delete from version where did=? and owner=?");
-			prestatement.setString(1, d);
-			prestatement.setString(2, this.id);
-			prestatement.executeUpdate();
+			PreparedStatement prestatement=conn.prepareStatement("select * from version where did=? and owner=?");
+			prestatement.setString(1,d);
+			prestatement.setString(2,this.id);
+		//	System.out.println(prestatement.toString());
+			ResultSet rs=prestatement.executeQuery();
+			if(rs.next()){
+				prestatement=conn.prepareStatement("delete from version where did=? and owner=?");
+				prestatement.setString(1, d);
+				prestatement.setString(2, this.id);
+				prestatement.executeUpdate();
 			
-			state = true;
-			System.out.println("Delete version is completed");
+				state = true;
+				System.out.println("Delete version is completed");
+			}else{
+				System.out.println("There is no version "+d);
+			}
 		}catch(Exception e){
 			System.out.println("Delete version error!");
 		}

@@ -24,9 +24,9 @@ public class Version {
 	
 	public Version(String did, String d, String vc) {
 		
-		this.dId = new String(did);
-		this.diagram = new String(d);
-		this.vcomment = new String(vc);
+		this.dId = did;
+		this.diagram =d;
+		this.vcomment =vc;
 
 	}
 	
