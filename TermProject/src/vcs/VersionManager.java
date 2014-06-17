@@ -1,14 +1,18 @@
 package vcs;
 
 import graphIO.GraphReaderTXT;
+import graphView.JungTreeViewer;
 import graphView.JungViewer;
 
+import java.awt.Container;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.swing.JFrame;
 
 import standardGraph.GraphComparison;
 import standardGraph.StandardGraph;
@@ -28,7 +32,7 @@ public class VersionManager {
 	private String curBranch;
 	
 	/** lastVersion of Version */
-	private int lastVersion;
+	private String lastVersion;
 	
 	/**
 	 * constructor
@@ -39,9 +43,9 @@ public class VersionManager {
 	public VersionManager() {
 		
 		versionTree = new ArrayList<String>();
-		id = null;
+		id = "";
 		curBranch = new String("1");
-		lastVersion = 0;
+		lastVersion = "";
 		
 	}
 	
@@ -72,7 +76,6 @@ public class VersionManager {
 			prestatement.setString(1, did);
 			ResultSet rs = prestatement.executeQuery();
 			if(rs.first()){
-				//rs.first();
 				
 				version=new Version(rs.getString("did"), rs.getString("diagram"), rs.getString("vcomment"));
 				
@@ -103,9 +106,9 @@ public class VersionManager {
 			
 			PreparedStatement prestatement=conn.prepareStatement("insert into version (id, owner, did, diagram, vcomment) values (null,?,?,?,?)");
 			
-			String last = this.getLatestBranch(vc).substring(this.getLatestBranch(vc).length()-1);
+			String last = this.getLatestBranch(curBranch).substring(this.getLatestBranch(curBranch).length()-1);
 			int lastPlus = Integer.parseInt(last) + 1;
-			String temp = (this.getLatestBranch(vc).substring(0,this.getLatestBranch(vc).length()-1)) + String.valueOf(lastPlus);
+			String temp = (this.getLatestBranch(curBranch).substring(0,this.getLatestBranch(curBranch).length()-1)) + String.valueOf(lastPlus);
 				
 			prestatement.setString(1,this.id);
 			prestatement.setString(2,temp);
@@ -178,16 +181,56 @@ public class VersionManager {
 		}
 		return state;
 	}
+	
+	/**
+	 * sort version tree by using VersionTree.
+	 * 
+	 * @param ArrayList<String> versions
+	 * @return 
+	 */
+	public void sortVersionTree(ArrayList<String> versions){		
+		for (int i=0; i<versions.size(); i++){
+			//print();
+			String[] versionToAdd = versions.get(i).split("\\.");
+			boolean added = false;			
+
+			for (int j=0; j<versionTree.size(); j++){
+				String[] version = versionTree.get(j).split("\\.");
+				if (version.length > versionToAdd.length){
+					versionTree.add(j, versions.get(i));
+					added = true;
+					break;
+				}else if (version.length == versionToAdd.length){
+					for (int k=0; k<version.length; k++){
+						if (Integer.parseInt(version[k]) > Integer.parseInt(versionToAdd[k])){
+							versionTree.add(j, versions.get(i));
+							added = true;
+							break;
+						}else if (Integer.parseInt(version[k]) < Integer.parseInt(versionToAdd[k])){
+							break;
+						}
+					}
+					if (added == true){
+						break;
+					}
+				}
+			}
+			if (added == false){
+				versionTree.add(versions.get(i));
+			}
+		}		
+
+	}
 
 	/**
 	 * make version tree by using diagramList
 	 * 
 	 * @param 
-	 * @return StandardGraph versionTree
+	 * @return 
 	 */
-	public StandardGraph makeVersionTree() {
+	public void makeVersionTree() {
 		
-		StandardGraph snapTree = null;
+		ArrayList<String> temp = new ArrayList<String>();
 		
 		try{
 			Connection conn=JDBC.getConnection();
@@ -196,17 +239,24 @@ public class VersionManager {
 			ResultSet rs = prestatement.executeQuery();
 			while(rs.next()){
 				String did=rs.getString("did");
-				versionTree.add(did);	
+				temp.add(did);	
 			}
 			
+			this.sortVersionTree(temp);
+				
+			System.out.println("Make snapshotTree is completed.");
 			
+			JFrame frame = new JFrame();
+	        Container content = frame.getContentPane();
+	        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+	        content.add(new JungTreeViewer(versionTree));
+	        frame.pack();
+	        frame.setVisible(true);
 			
-			System.out.println("Make snapshotTree is completed");
 		}catch(Exception e){
 			System.out.println("Make snapshotTree error!");
 		}
-		
-		return snapTree;
 	}
 	
 	/**
@@ -262,6 +312,7 @@ public class VersionManager {
 	 * @return String lastVersion
 	 */
 	public String getLatestBranch(String curBranch){
+
 		String[] curBranchToCheck = curBranch.split("\\.");
 		String latestBranch = "";
 		if (curBranchToCheck.length == 1){
@@ -283,7 +334,9 @@ public class VersionManager {
 			//System.out.println("Builder: " + builder.toString());
 			latestBranch = getDiaLastVersion(builder.toString());
 		}
+		this.lastVersion = latestBranch;
 		return latestBranch;
+		
 	}
 
 	/**

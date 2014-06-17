@@ -53,16 +53,6 @@ public class LoginView extends HDVCS_UI {
 	public String getId() {
 		return id;
 	}
-
-	/**
-	 * get Pass.
-	 * 
-	 * @param 
-	 * @return String pass
-	 */
-	public String getPass() {
-		return pass;
-	}
 	
 	/**
 	 * run authentication.
@@ -114,6 +104,8 @@ public class LoginView extends HDVCS_UI {
 	 * @return boolean state
 	 */
 	public boolean runLoginView() {
+		
+		this.state = false;
 		
 		InputStreamReader in=new InputStreamReader(System.in);
 	    BufferedReader br=new BufferedReader(in);

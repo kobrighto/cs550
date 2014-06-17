@@ -45,7 +45,7 @@ public class VersionView extends HDVCS_UI {
 	 */
 	public void displayVersionTree() {
 		
-		//TODO: show versionTree
+		verHandler.makeVersionTree();
 		
 	}
 	
@@ -172,6 +172,11 @@ public class VersionView extends HDVCS_UI {
 		InputStreamReader in=new InputStreamReader(System.in);
 	    BufferedReader br=new BufferedReader(in);
 		
+	    System.out.println("Current version tree:");
+		this.displayVersionTree()();
+		System.out.println("----------------------------");
+		System.out.println("");
+	    
 		while (true)
 		{
 			int select = -1;
@@ -320,10 +325,10 @@ public class VersionView extends HDVCS_UI {
 				break;
 				
 			case 9:
-				return 1;
+				return 0;
 				
 			case 10:
-				return 0;
+				return 1;
 
 			default:
 				System.out.println("Select correct number.");

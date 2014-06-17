@@ -113,7 +113,8 @@ public class HDVCS_UI {
 			System.out.println("Select next step:");
 			System.out.println("1. Diagram View.");
 			System.out.println("2. Version View.");
-			System.out.println("3. Stop Program.");
+			System.out.println("3. Login View.");
+			System.out.println("4. Stop Program.");
 			
 			System.out.print("Select : ");
 			
@@ -145,9 +146,20 @@ public class HDVCS_UI {
 				break;
 			
 			case 3:
-				this.stopProgram();
+				if ((state = logView.runLoginView()) == false)
+					this.stopProgram();
+				else
+				{
+					System.out.println("Login completed!!");
+					verHandler.setOwner(logView.getId());
+					snapHandler.setOwner(logView.getId());
+				}
 				break;
 
+			case 4:
+				this.stopProgram();
+				break;	
+				
 			default:
 				System.out.println("Select correct number.");
 				System.out.println("----------------------------");

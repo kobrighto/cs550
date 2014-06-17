@@ -43,7 +43,7 @@ public class SnapshotView extends HDVCS_UI {
 	 */
 	public void displaySnapTree() {
 		
-		//TODO: show snapTree
+		snapHandler.makeSnapTree();
 		
 	}
 	
@@ -92,6 +92,11 @@ public class SnapshotView extends HDVCS_UI {
 		
 		InputStreamReader in=new InputStreamReader(System.in);
 	    BufferedReader br=new BufferedReader(in);
+	    
+		System.out.println("Current snapshot tree:");
+		this.displaySnapTree();
+		System.out.println("----------------------------");
+		System.out.println("");
 		
 		while (true)
 		{

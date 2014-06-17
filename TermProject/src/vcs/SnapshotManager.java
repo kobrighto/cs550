@@ -1,10 +1,15 @@
 package vcs;
 
+import graphView.JungTreeViewer;
+
+import java.awt.Container;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.swing.JFrame;
 
 import standardGraph.StandardGraph;
 
@@ -14,8 +19,8 @@ import db.Version;
 
 public class SnapshotManager {
 	
-	/** diagram List */
-	private List<Snapshot> snapshotList;
+	/** version List */
+	private ArrayList<String> snapshotTree;
 	
 	/** owner */
 	private String id;
@@ -31,9 +36,8 @@ public class SnapshotManager {
 	 */
 	public SnapshotManager() {
 	
-		snapshotList = new ArrayList<Snapshot>();
-		id = null;
-		lastSnapshot = 0;
+		snapshotTree = new ArrayList<String>();
+		id = "";
 	}
 	
 	/**
@@ -64,14 +68,18 @@ public class SnapshotManager {
 			prestatement.setInt(1, sid);
 			ResultSet rs = prestatement.executeQuery();
 			
-			rs.next();
-		
-			version=new Version(rs.getString("did"), rs.getString("diagram"), null);
-			snapshot=new Snapshot(version, rs.getInt("sid"), rs.getString("scomment"));
-
-			System.out.println("Get diagram is completed");
+			if (rs.next())
+			{
+				version=new Version(rs.getString("did"), rs.getString("diagram"), null);
+				snapshot=new Snapshot(version, rs.getInt("sid"), rs.getString("scomment"));
+				System.out.println("Get snapshot is completed");
+			}
+			else
+			{
+				System.out.println("There is no snapshot "+ sid);
+			}
 		}catch(Exception e){
-			System.out.println("Get diagram error!");
+			System.out.println("Get snapshot error!");
 		}
 		return snapshot;
 	}
@@ -108,16 +116,56 @@ public class SnapshotManager {
 		return state;
 		
 	}
-
+	
 	/**
-	 * make version tree by using diagramList
+	 * sort snapshot tree by using VersionTree.
 	 * 
 	 * @param 
-	 * @return Diagram versionTree
+	 * @return StandardGraph versionTree
 	 */
-	public StandardGraph makeSnapTree() {
+	public void sortSnapshotTree(ArrayList<String> versions){		
+		for (int i=0; i<versions.size(); i++){
+			//print();
+			String[] versionToAdd = versions.get(i).split("\\.");
+			boolean added = false;			
+
+			for (int j=0; j<snapshotTree.size(); j++){
+				String[] version = snapshotTree.get(j).split("\\.");
+				if (version.length > versionToAdd.length){
+					snapshotTree.add(j, versions.get(i));
+					added = true;
+					break;
+				}else if (version.length == versionToAdd.length){
+					for (int k=0; k<version.length; k++){
+						if (Integer.parseInt(version[k]) > Integer.parseInt(versionToAdd[k])){
+							snapshotTree.add(j, versions.get(i));
+							added = true;
+							break;
+						}else if (Integer.parseInt(version[k]) < Integer.parseInt(versionToAdd[k])){
+							break;
+						}
+					}
+					if (added == true){
+						break;
+					}
+				}
+			}
+			if (added == false){
+				snapshotTree.add(versions.get(i));
+			}
+		}		
+
+	}
+
+	/**
+	 * make snapshot tree by using diagramList
+	 * 
+	 * @param 
+	 * @return 
+	 */
+	public void makeSnapTree() {
 		
-		StandardGraph snapTree = null;
+		ArrayList<String> temp = new ArrayList<String>();
 		
 		try{
 			Connection conn=JDBC.getConnection();
@@ -125,24 +173,25 @@ public class SnapshotManager {
 			prestatement.setString(1, this.id);
 			ResultSet rs = prestatement.executeQuery();
 			while(rs.next()){
-				int sid=rs.getInt("sid");
-				String did=rs.getString("did");
-				String dia=rs.getString("version");
-				String own=rs.getString("owner");
-				String sc=rs.getString("scomment");
-				Version ver=new Version(did,dia,null);
-				Snapshot snap=new Snapshot(ver,sid,sc);
-				snapshotList.add(snap);	
+				String sid=rs.getString("sid");
+				temp.add(sid);	
 			}
 			
+			this.sortSnapshotTree(temp);
+				
+			System.out.println("Make snapshotTree is completed.");
 			
-			//TODO: make snapshot tree
-			System.out.println("Make snapshotTree is completed");
+			JFrame frame = new JFrame();
+	        Container content = frame.getContentPane();
+	        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+	        content.add(new JungTreeViewer(snapshotTree));
+	        frame.pack();
+	        frame.setVisible(true);
+			
 		}catch(Exception e){
 			System.out.println("Make snapshotTree error!");
 		}
-		
-		return snapTree;
 				
 	}
 	
