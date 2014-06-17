@@ -58,9 +58,12 @@ public class SnapshotView extends HDVCS_UI {
 		GraphReaderTXT Reader = new GraphReaderTXT();
 		Snapshot temp = snapHandler.getSnapshot(sID);
 		
-		StandardGraph newGraph = Reader.readString(temp.getVersion().getDiagram());
+		if(temp!=null){
+			StandardGraph newGraph = Reader.readString(temp.getVersion().getDiagram());
+			this.display(newGraph);
+		}
 		
-		this.display(newGraph);
+		
 		
 	}
 	
@@ -73,12 +76,19 @@ public class SnapshotView extends HDVCS_UI {
 	public void runSnapshot(String did, String sc) {
 		
 		Version temp = verHandler.getVersion(did);
-		snapHandler.snapshot(temp, sc);
 		
-		GraphReaderTXT Reader = new GraphReaderTXT();
-		StandardGraph newGraph = Reader.readString(temp.getDiagram());
-		
-		this.display(newGraph);
+		if(temp!=null){
+			snapHandler.snapshot(temp, sc);
+			
+			
+			GraphReaderTXT Reader = new GraphReaderTXT();
+			StandardGraph newGraph = Reader.readString(temp.getDiagram());
+			
+			this.display(newGraph);
+		}
+		else{
+			System.out.println("There is no diagram version "+did+ ", snapshot failed");
+		}
 
 	}
 	

@@ -205,11 +205,11 @@ public class SnapshotManager {
 		
 		try{
 			Connection conn=JDBC.getConnection();
-			PreparedStatement prestatement=conn.prepareStatement("select snapid from diagram where owner=? order by version desc limit 1");
+			PreparedStatement prestatement=conn.prepareStatement("select sid from snapshot where owner=? order by sid desc limit 1");
 			prestatement.setString(1, this.id);
 			ResultSet rs=prestatement.executeQuery();
 			while(rs.next()){
-				lastSnapshot=rs.getInt("snapid");
+				lastSnapshot=rs.getInt("sid");
 			}
 			System.out.println("Get last snap id is completed");
 		}catch(Exception e){
