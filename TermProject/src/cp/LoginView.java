@@ -112,7 +112,7 @@ public class LoginView extends HDVCS_UI {
 		
 		while (!state)
 		{
-			int select = -1;
+			String select = "";
 			System.out.println("1. Login.");
 			System.out.println("2. New user.");
 			System.out.println("3. Delete user.");
@@ -121,7 +121,7 @@ public class LoginView extends HDVCS_UI {
 			System.out.print("Select : ");
 			
 			try {
-				select = Integer.parseInt(br.readLine());
+				select = br.readLine();
 			} catch (IOException e1) {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
@@ -131,7 +131,7 @@ public class LoginView extends HDVCS_UI {
 			
 			switch (select)
 			{
-			case 1:
+			case "1":
 				try {
 					System.out.println("Enter ID & PASS");
 					System.out.print("ID : ");
@@ -151,7 +151,7 @@ public class LoginView extends HDVCS_UI {
 				}	
 				break;
 			
-			case 2:
+			case "2":
 				try {
 					System.out.println("Enter new ID & PASS");
 					System.out.print("ID : ");
@@ -171,7 +171,7 @@ public class LoginView extends HDVCS_UI {
 				}
 				break;
 			
-			case 3:
+			case "3":
 				try {
 					System.out.println("Enter delete ID & PASS");
 					System.out.print("ID : ");
@@ -191,7 +191,7 @@ public class LoginView extends HDVCS_UI {
 				}
 				break;
 				
-			case 4:
+			case "4":
 				return false;
 
 			default:

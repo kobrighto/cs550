@@ -179,7 +179,7 @@ public class VersionView extends HDVCS_UI {
 	    
 		while (true)
 		{
-			int select = -1;
+			String select = "";
 			System.out.println("1. Display version tree.");
 			System.out.println("2. Display specific version of diagram.");
 			//System.out.println("3. Delete specific version of diagram.");		//Delete is not allowed.	
@@ -194,7 +194,7 @@ public class VersionView extends HDVCS_UI {
 			System.out.print("Select : ");
 			
 			try {
-				select = Integer.parseInt(br.readLine());
+				select = br.readLine();
 			} catch (IOException e1) {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
@@ -204,11 +204,11 @@ public class VersionView extends HDVCS_UI {
 			
 			switch (select)
 			{
-			case 1:
+			case "1":
 				this.displayVersionTree();
 				break;
 			
-			case 2:
+			case "2":
 				try {
 					System.out.println("Enter diagram version: ");
 					System.out.print("Version : ");
@@ -241,7 +241,7 @@ public class VersionView extends HDVCS_UI {
 				}
 				break;*/
 			
-			case 3:
+			case "3":
 				try {
 					System.out.println("Enter two versions which will be differed: ");
 					System.out.print("Version 1 : ");
@@ -259,7 +259,7 @@ public class VersionView extends HDVCS_UI {
 				}
 				break;
 				
-			case 4:
+			case "4":
 				try {
 					System.out.println("Enter alsolute path of diagram: ");
 					String p = br.readLine();
@@ -275,7 +275,7 @@ public class VersionView extends HDVCS_UI {
 				}	
 				break;
 				
-			case 5:
+			case "5":
 				try {
 					System.out.println("Enter junction version which you want to make branch\n"
 							+ "(only support 1 brach for parent branch): ");
@@ -292,7 +292,7 @@ public class VersionView extends HDVCS_UI {
 				}
 				break;
 				
-			case 6:
+			case "6":
 				try {
 					System.out.println("Enter branch name which you want to change: ");
 					System.out.print("Branched version (e.g: 1, 1.1, X.1, X.X.1 ...): ");
@@ -308,7 +308,7 @@ public class VersionView extends HDVCS_UI {
 				}
 				break;
 				
-			case 7:
+			case "7":
 				try {
 					System.out.println("Enter version comment for commit: ");
 					System.out.print("version comment: ");
@@ -324,10 +324,10 @@ public class VersionView extends HDVCS_UI {
 				}
 				break;
 				
-			case 8:
+			case "8":
 				return 0;
 				
-			case 9:
+			case "9":
 				return 1;
 
 			default:

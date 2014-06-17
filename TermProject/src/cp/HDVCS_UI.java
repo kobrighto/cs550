@@ -107,7 +107,7 @@ public class HDVCS_UI {
 		
 		while (running)
 		{
-			int select = -1;
+			String select = "";
 			int isfinish = -1;
 			
 			System.out.println("Select next step:");
@@ -119,7 +119,7 @@ public class HDVCS_UI {
 			System.out.print("Select : ");
 			
 			try {
-				select = Integer.parseInt(br.readLine());
+				select = br.readLine();
 			} catch (IOException e1) {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
@@ -129,7 +129,7 @@ public class HDVCS_UI {
 			
 			switch (select)
 			{
-			case 1:
+			case "1":
 				isfinish = verView.runVersionView();
 				if (isfinish == 0)
 					break;
@@ -137,7 +137,7 @@ public class HDVCS_UI {
 					this.stopProgram();	
 				break;
 			
-			case 2:
+			case "2":
 				isfinish = snapView.runSnapshotView();
 				if (isfinish == 0)
 					break;
@@ -145,7 +145,7 @@ public class HDVCS_UI {
 					this.stopProgram();
 				break;
 			
-			case 3:
+			case "3":
 				if ((state = logView.runLoginView()) == false)
 					this.stopProgram();
 				else
@@ -156,7 +156,7 @@ public class HDVCS_UI {
 				}
 				break;
 
-			case 4:
+			case "4":
 				this.stopProgram();
 				break;	
 				

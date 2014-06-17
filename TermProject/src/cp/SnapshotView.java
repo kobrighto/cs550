@@ -112,7 +112,7 @@ public class SnapshotView extends HDVCS_UI {
 		
 		while (true)
 		{
-			int select = -1;
+			String select = "";
 			System.out.println("1. Display snapshot tree.");
 			System.out.println("2. Display specific ID of snapshot.");
 			System.out.println("3. Run snapshot.");
@@ -122,7 +122,7 @@ public class SnapshotView extends HDVCS_UI {
 			System.out.print("Select : ");
 			
 			try {
-				select = Integer.parseInt(br.readLine());
+				select = br.readLine();
 			} catch (IOException e1) {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
@@ -132,11 +132,11 @@ public class SnapshotView extends HDVCS_UI {
 			
 			switch (select)
 			{
-			case 1:
+			case "1":
 				this.displaySnapTree();
 				break;
 			
-			case 2:
+			case "2":
 				try {
 					System.out.println("Enter snapshot ID: ");
 					System.out.print("ID : ");
@@ -152,7 +152,7 @@ public class SnapshotView extends HDVCS_UI {
 				}
 				break;
 				
-			case 3:
+			case "3":
 				try {
 					System.out.println("Enter diagram version, and snapshot comment which will be snapshoted: ");
 					System.out.print("Version : ");
@@ -170,10 +170,10 @@ public class SnapshotView extends HDVCS_UI {
 				}
 				break;
 				
-			case 8:
+			case "4":
 				return 0;
 				
-			case 9:
+			case "5":
 				return 1;
 				
 			default:
