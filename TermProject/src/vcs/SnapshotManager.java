@@ -64,8 +64,9 @@ public class SnapshotManager {
 
 		try{
 			Connection conn=JDBC.getConnection();
-			PreparedStatement prestatement=conn.prepareStatement("select * from snapshot where sid=?");
+			PreparedStatement prestatement=conn.prepareStatement("select * from snapshot where sid=? and owner=?");
 			prestatement.setInt(1, sid);
+			prestatement.setString(2, id);
 			ResultSet rs = prestatement.executeQuery();
 			
 			if (rs.next())
