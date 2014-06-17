@@ -181,7 +181,7 @@ public class SnapshotManager {
 				
 			System.out.println("Make snapshotTree is completed.");
 			
-			JFrame frame = new JFrame();
+			JFrame frame = new JFrame("Snapshot Tree");
 	        Container content = frame.getContentPane();
 	        //frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 

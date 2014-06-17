@@ -159,8 +159,8 @@ public class JungTreeViewer extends JApplet {
 
 		layout = new TreeLayout<String,Integer>(graph);
 		radialLayout = new RadialTreeLayout<String,Integer>(graph);
-		radialLayout.setSize(new Dimension(1000,1000));
-		vv =  new VisualizationViewer<String,Integer>(layout, new Dimension(1000,1000));
+		radialLayout.setSize(new Dimension(700,700));
+		vv =  new VisualizationViewer<String,Integer>(layout, new Dimension(700,700));  //jy: size
 		vv.setBackground(Color.white);
 		vv.getRenderContext().setEdgeShapeTransformer(new EdgeShape.Line());
 		vv.getRenderContext().setVertexLabelTransformer(new ToStringLabeller());
