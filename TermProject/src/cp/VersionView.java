@@ -106,9 +106,7 @@ public class VersionView extends HDVCS_UI {
 			// TODO Auto-generated catch block
 			//e.printStackTrace();
 		}
-		
-		
-		
+
 	}
 	
 	/**
@@ -173,7 +171,7 @@ public class VersionView extends HDVCS_UI {
 	    BufferedReader br=new BufferedReader(in);
 		
 	    System.out.println("Current version tree:");
-		this.displayVersionTree()();
+		this.displayVersionTree();
 		System.out.println("----------------------------");
 		System.out.println("");
 	    
