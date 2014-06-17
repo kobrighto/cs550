@@ -170,8 +170,10 @@ public class VersionView extends HDVCS_UI {
 		InputStreamReader in=new InputStreamReader(System.in);
 	    BufferedReader br=new BufferedReader(in);
 		
-	    System.out.println("Current version tree:");
+	    
 		this.displayVersionTree();
+		System.out.println("----------------------------");
+		System.out.println("Current version tree:");
 		System.out.println("----------------------------");
 		System.out.println("");
 	    
@@ -180,14 +182,14 @@ public class VersionView extends HDVCS_UI {
 			int select = -1;
 			System.out.println("1. Display version tree.");
 			System.out.println("2. Display specific version of diagram.");
-			System.out.println("3. Delete specific version of diagram.");			
-			System.out.println("4. Run diff between two version.");
-			System.out.println("5. Load local diagram.");
-			System.out.println("6. Make branch.");
-			System.out.println("7. Change branch.");
-			System.out.println("8. Commit loaded diagram.");
-			System.out.println("9. Change View.");
-			System.out.println("10. Stop program.");
+			//System.out.println("3. Delete specific version of diagram.");		//Delete is not allowed.	
+			System.out.println("3. Run diff between two version.");
+			System.out.println("4. Load local diagram.");
+			System.out.println("5. Make branch.");
+			System.out.println("6. Change branch.");
+			System.out.println("7. Commit loaded diagram.");
+			System.out.println("8. Change View.");
+			System.out.println("9. Stop program.");
 			
 			System.out.print("Select : ");
 			
@@ -223,7 +225,7 @@ public class VersionView extends HDVCS_UI {
 				}
 				break;
 				
-			case 3:
+			/*case 3:
 				try {
 					System.out.println("Enter diagram version which will be deleted: ");
 					System.out.print("Version : ");
@@ -237,9 +239,9 @@ public class VersionView extends HDVCS_UI {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
-				break;
+				break;*/
 			
-			case 4:
+			case 3:
 				try {
 					System.out.println("Enter two versions which will be differed: ");
 					System.out.print("Version 1 : ");
@@ -257,7 +259,7 @@ public class VersionView extends HDVCS_UI {
 				}
 				break;
 				
-			case 5:
+			case 4:
 				try {
 					System.out.println("Enter alsolute path of diagram: ");
 					String p = br.readLine();
@@ -273,7 +275,7 @@ public class VersionView extends HDVCS_UI {
 				}	
 				break;
 				
-			case 6:
+			case 5:
 				try {
 					System.out.println("Enter junction version which you want to make branch\n"
 							+ "(only support 1 brach for parent branch): ");
@@ -290,7 +292,7 @@ public class VersionView extends HDVCS_UI {
 				}
 				break;
 				
-			case 7:
+			case 6:
 				try {
 					System.out.println("Enter branch name which you want to change: ");
 					System.out.print("Branched version (e.g: 1, 1.1, X.1, X.X.1 ...): ");
@@ -306,7 +308,7 @@ public class VersionView extends HDVCS_UI {
 				}
 				break;
 				
-			case 8:
+			case 7:
 				try {
 					System.out.println("Enter version comment for commit: ");
 					System.out.print("version comment: ");
@@ -322,10 +324,10 @@ public class VersionView extends HDVCS_UI {
 				}
 				break;
 				
-			case 9:
+			case 8:
 				return 0;
 				
-			case 10:
+			case 9:
 				return 1;
 
 			default:

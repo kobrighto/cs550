@@ -110,7 +110,7 @@ public class VersionManager {
 			
 			System.out.println("Now curBranch : " + curBranch); //debug
 			System.out.println("Now last Branch : " + this.getLatestBranch(curBranch)); //debug
-			if (this.getLatestBranch(curBranch).length() == 0)
+			if ((this.getLatestBranch(curBranch).length() == 0))
 			{
 				temp = curBranch;
 				versionTree.add(temp);
@@ -327,7 +327,7 @@ public class VersionManager {
 			}
 		}
 		if (lastChildSeen == -1){
-			return "-1"; // no child has been found
+			return (curVersion+".0"); // no child has been found
 		}
 		return versionTree.get(lastChildSeen); //latest child = most recent version
 	}
@@ -358,7 +358,7 @@ public class VersionManager {
 				builder.append(".");
 				builder.append(curBranchToCheck[i]);				
 			}
-			System.out.println("Builder: " + builder.toString()); //debug
+			//System.out.println("Builder: " + builder.toString()); //debug
 			latestBranch = getDiaLastVersion(builder.toString());
 		}
 		

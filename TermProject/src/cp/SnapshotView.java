@@ -93,8 +93,10 @@ public class SnapshotView extends HDVCS_UI {
 		InputStreamReader in=new InputStreamReader(System.in);
 	    BufferedReader br=new BufferedReader(in);
 	    
-		System.out.println("Current snapshot tree:");
+		
 		this.displaySnapTree();
+		System.out.println("----------------------------");
+		System.out.println("Current snapshot tree:");
 		System.out.println("----------------------------");
 		System.out.println("");
 		
