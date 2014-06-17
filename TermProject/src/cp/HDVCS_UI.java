@@ -7,7 +7,6 @@ import java.io.InputStreamReader;
 import java.lang.Thread.State;
 
 import graphView.JungViewer;
-import db.Version;
 import standardGraph.*;
 import vcs.SnapshotManager;
 import vcs.UserManager;

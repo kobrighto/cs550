@@ -1,23 +1,15 @@
 package cp;
 
 import graphIO.GraphReaderTXT;
-import graphView.JungViewer;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.List;
 
-import standardGraph.GraphComparison;
 import standardGraph.StandardGraph;
-import vcs.DiagramManager;
-import vcs.SnapshotManager;
+import vcs.VersionManager;
 
-import cp.HDVCS_UI.handleType;
-import cp.HDVCS_UI.viewStyle;
-import db.Diagram;
-import db.Snapshot;
-import db.User;
 import db.Version;
 
 public class VersionView extends HDVCS_UI {
@@ -39,26 +31,9 @@ public class VersionView extends HDVCS_UI {
 	 */
 	public VersionView() {
 		
-		this.style = viewStyle.LOGIN;
+		this.style = viewStyle.VERSION;
 		
 		//TODO:display initial view. (version tree)
-		
-	}
-	
-	/**
-	 * display Snapshots.
-	 * 
-	 * @param 
-	 * @return 
-	 */
-	public void displaySnap(int sID) {
-		
-		GraphReaderTXT Reader = new GraphReaderTXT();
-		Snapshot temp = snapHandler.getSnapshot(sID);
-		
-		StandardGraph newGraph = Reader.readString(temp.getSnapshot().getDiagram());
-		
-		this.display(newGraph);
 		
 	}
 	
@@ -158,9 +133,9 @@ public class VersionView extends HDVCS_UI {
 	 * @param String branch name.
 	 * @return 
 	 */
-	public void runMakeBranch(String d, String bn) {
+	public void runMakeBranch(String d) {
 		
-		verHandler.makeBranch(d, bn);
+		verHandler.makeBranch(d);
 		
 	}
 	
@@ -270,29 +245,28 @@ public class VersionView extends HDVCS_UI {
 				
 			case 5:
 				try {
-					System.out.println("Enter two versions which will be differed: ");
-					System.out.print("Version 1 : ");
-					int v1 = Integer.parseInt(br.readLine());
-					System.out.print("Version 2 : ");
-					int v2 = Integer.parseInt(br.readLine());
+					System.out.println("Enter alsolute path of diagram: ");
+					String p = br.readLine();
+				
+					this.loadLocal(p);
 					
-					this.runDiff(v1, v2);
 					System.out.println("----------------------------");
 					System.out.println("");
 					
 				} catch (IOException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
-				}
+				}	
 				break;
 				
 			case 6:
 				try {
-					System.out.println("Enter diagram version which will be snapshoted: ");
-					System.out.print("Version : ");
-					int v = Integer.parseInt(br.readLine());
+					System.out.println("Enter junction version which you want to make branch\n"
+							+ "(only support 1 brach for parent branch): ");
+					System.out.print("Juction version: ");
+					String d = br.readLine();					
 					
-					this.runSnapshot(v);
+					this.runMakeBranch(d);
 					System.out.println("----------------------------");
 					System.out.println("");
 					
@@ -304,11 +278,11 @@ public class VersionView extends HDVCS_UI {
 				
 			case 7:
 				try {
-					System.out.println("Enter diagram version which will be deleted: ");
-					System.out.print("Version : ");
-					int v = Integer.parseInt(br.readLine());
+					System.out.println("Enter branch name which you want to change: ");
+					System.out.print("Branched version (e.g: 1, 1.1, X.1, X.X.1 ...): ");
+					String bn = br.readLine();
 					
-					this.runDeleteVersion(v);
+					this.runChangeBranch(bn);
 					System.out.println("----------------------------");
 					System.out.println("");
 					
@@ -319,17 +293,27 @@ public class VersionView extends HDVCS_UI {
 				break;
 				
 			case 8:
-				return 0;
+				try {
+					System.out.println("Enter version comment for commit: ");
+					System.out.print("version comment: ");
+					String vc = br.readLine();
+					
+					this.runCommit(vc);
+					System.out.println("----------------------------");
+					System.out.println("");
+					
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				break;
 				
 			case 9:
 				return 1;
 				
 			case 10:
 				return 0;
-				
-			case 11:
-				return 1;
-				
+
 			default:
 				System.out.println("Select correct number.");
 				break;

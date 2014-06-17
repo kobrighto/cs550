@@ -5,8 +5,6 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 
 import vcs.UserManager;
-import cp.HDVCS_UI.handleType;
-import cp.HDVCS_UI.viewStyle;
 import db.User;
 
 public class LoginView extends HDVCS_UI {

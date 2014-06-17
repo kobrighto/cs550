@@ -1,21 +1,16 @@
 package cp;
 
 import graphIO.GraphReaderTXT;
-import graphView.JungViewer;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.List;
 
-import standardGraph.GraphComparison;
 import standardGraph.StandardGraph;
 import vcs.SnapshotManager;
 
-import cp.HDVCS_UI.handleType;
-import cp.HDVCS_UI.viewStyle;
 import db.Snapshot;
-import db.User;
 import db.Version;
 
 public class SnapshotView extends HDVCS_UI {

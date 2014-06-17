@@ -19,10 +19,13 @@ import db.Version;
 public class VersionManager {
 			
 	/** diagram List */
-	private List<Version> versionList;
+	private ArrayList<String> versionTree;
 	
 	/** owner */
 	private String id;
+	
+	/** curBranch */
+	private String curBranch;
 	
 	/** lastVersion of Version */
 	private int lastVersion;
@@ -35,8 +38,9 @@ public class VersionManager {
 	 */
 	public VersionManager() {
 		
-		versionList = new ArrayList<Version>();
+		versionTree = new ArrayList<String>();
 		id = null;
+		curBranch = new String("1");
 		lastVersion = 0;
 		
 	}
@@ -68,7 +72,7 @@ public class VersionManager {
 			prestatement.setString(1, did);
 			ResultSet rs = prestatement.executeQuery();
 			
-			rs.next();
+			rs.first();
 			
 			version=new Version(rs.getString("did"), rs.getString("diagram"), rs.getString("vcomment"));
 			
@@ -94,8 +98,12 @@ public class VersionManager {
 			Connection conn=JDBC.getConnection();
 			
 			PreparedStatement prestatement=conn.prepareStatement("insert into version (did, diagram, owner, vcomment) values (?,?,?,?)");
-			//TODO:Set valid did
-			//prestatement.setInt(1,this.getDiaLastVersion()+1);
+			
+			String last = this.getLatestBranch(vc).substring(this.getLatestBranch(vc).length()-1);
+			int lastPlus = Integer.parseInt(last) + 1;
+			String temp = (this.getLatestBranch(vc).substring(0,this.getLatestBranch(vc).length()-1)) + String.valueOf(lastPlus);
+				
+			prestatement.setString(1,temp);
 			prestatement.setString(2, v.getDiagram());
 			prestatement.setString(3,this.id);
 			prestatement.setString(4,vc);
@@ -175,15 +183,11 @@ public class VersionManager {
 			ResultSet rs = prestatement.executeQuery();
 			while(rs.next()){
 				String did=rs.getString("did");
-				String dia=rs.getString("version");
-				String own=rs.getString("owner");
-				String vc=rs.getString("vcomment");
-				Version ver=new Version(did,dia,vc);
-				versionList.add(ver);	
+				versionTree.add(did);	
 			}
 			
 			
-			//TODO: make version tree
+			
 			System.out.println("Make snapshotTree is completed");
 		}catch(Exception e){
 			System.out.println("Make snapshotTree error!");
@@ -193,67 +197,133 @@ public class VersionManager {
 	}
 	
 	/**
-	 * Send last version of diagram to versionView.
+	 * Calculate last version of diagram.
 	 * 
-	 * @param String branch header
+	 * @param String curVersion
 	 * @return String lastVersion
 	 */
-	public int getDiaLastVersion(String bh) {
+	public String getDiaLastVersion(String curVersion) {
 		
-		//TODO: find last version of each user's diagram.
-		//lastVersion = ~~;
-		try{
-			Connection conn=JDBC.getConnection();
-			PreparedStatement prestatement=conn.prepareStatement("select version from diagram where owner=? order by version desc limit 1");
-			prestatement.setString(1, this.id);
-			ResultSet rs=prestatement.executeQuery();
-			while(rs.next()){
-				lastVersion=rs.getInt("version");
+		String[] versionToCheck = curVersion.split("\\.");
+		int lastChildSeen = -1;
+		boolean childSeen = false;
+		boolean passed = false;
+		for (int i=0; i<versionTree.size(); i++){
+			String[] versions = versionTree.get(i).split("\\.");
+			if (versions.length <= versionToCheck.length){
+				// do nothing
+			}else if (versions.length == versionToCheck.length+1){
+				// check to see if it's a child
+				for (int j=0; j<versions.length-1; j++){
+					if (Integer.parseInt(versions[j]) > Integer.parseInt(versionToCheck[j])){
+						// not a child, already passed
+						passed = true;
+						break;
+					}else if (Integer.parseInt(versions[j]) < Integer.parseInt(versionToCheck[j])){
+						// not a child, did not pass
+						break;
+					}
+					childSeen = true;
+				}
+				if (passed == true){
+					// already pass the children 'area'
+					break;
+				}else if (childSeen == true){
+					// this is a child, return
+					lastChildSeen = i;
+				}
+			}else{
+				break;
 			}
-			System.out.println("Get last version is completed");
-		}catch(Exception e){
-			System.out.println("Get last version error!");
 		}
-				
-		return lastVersion;
+		if (lastChildSeen == -1){
+			return "-1"; // no child has been found
+		}
+		return versionTree.get(lastChildSeen); //latest child = most recent version
+	}
+	
+	/**
+	 * Calculate last version of diagram in curbranch.
+	 * 
+	 * @param String curVersion
+	 * @return String lastVersion
+	 */
+	public String getLatestBranch(String curBranch){
+		String[] curBranchToCheck = curBranch.split("\\.");
+		String latestBranch = "";
+		if (curBranchToCheck.length == 1){
+			for (int i=0; i<versionTree.size(); i++){
+				String[] version = versionTree.get(i).split("\\.");
+				if (version.length == 1){
+					latestBranch = versionTree.get(i);
+				}else {
+					break;
+				}
+			}
+		}else{			
+			StringBuilder builder = new StringBuilder();
+			builder.append(curBranchToCheck[0]);
+			for (int i=1; i<curBranchToCheck.length-1; i++){
+				builder.append(".");
+				builder.append(curBranchToCheck[i]);				
+			}
+			//System.out.println("Builder: " + builder.toString());
+			latestBranch = getDiaLastVersion(builder.toString());
+		}
+		return latestBranch;
 	}
 
 	/**
 	 * make branch and commit branch header.
 	 * 
 	 * @param String did
-	 * @param String branch name
-	 * @return boolean state
+	 * @return 
 	 */
-	public boolean makeBranch(String d, String bn) {
-		String branchHeaderId = d + ".1";
-		Version v = this.getVersion(d);
+	public void makeBranch(String d) {
 		
-		boolean state = false;
-		
-		//db starts
 		try{
 			Connection conn=JDBC.getConnection();
+			PreparedStatement prestatement=conn.prepareStatement("select * from version where did=?");
+			prestatement.setString(1, d);
+			ResultSet rs = prestatement.executeQuery();
 			
-			PreparedStatement prestatement=conn.prepareStatement("insert into version (did, diagram, owner, vcomment) values (?,?,?,?)");
-			prestatement.setString(1,branchHeaderId);
-			prestatement.setString(2,v.getDiagram());
-			prestatement.setString(3,this.id);
-			prestatement.setString(4,bn);
-			prestatement.executeUpdate();
+			if(rs.next())
+			{
+				System.out.println("branch is already exist.");
+			}
+			else
+			{
+				this.curBranch = new String(d + ".1");
+				System.out.println("Make branch is completed.");
+			}
 			
-			state=true;
-			System.out.println("Make branch is completed");
 		}catch(Exception e){
-			e.printStackTrace();
 			System.out.println("Make branch error!");
 		}
-		
-		return state;
-		
+
 	}
 
 	public void changeBranch(String vn) {
+		try{
+			Connection conn=JDBC.getConnection();
+			PreparedStatement prestatement=conn.prepareStatement("select * from version where did=?");
+			prestatement.setString(1, vn);
+			ResultSet rs = prestatement.executeQuery();
+			
+			if(rs.next())
+			{
+				this.curBranch = new String(vn);
+				System.out.println("branch change is completed.");
+			}
+			else
+			{
+				System.out.println(vn + " branch is not exist.");
+			}
+			
+		}catch(Exception e){
+			System.out.println("Make branch error!");
+		}
+		
 		
 		
 	}
