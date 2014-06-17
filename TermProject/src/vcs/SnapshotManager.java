@@ -128,6 +128,8 @@ public class SnapshotManager {
 	 * @return StandardGraph versionTree
 	 */
 	public void sortSnapshotTree(ArrayList<String> versions){		
+		
+		snapshotTree.clear();
 		for (int i=0; i<versions.size(); i++){
 			//print();
 			String[] versionToAdd = versions.get(i).split("\\.");
@@ -178,7 +180,7 @@ public class SnapshotManager {
 			ResultSet rs = prestatement.executeQuery();
 			while(rs.next()){
 				String sid=rs.getString("sid");
-				temp.add(sid);	
+				temp.add(sid);
 			}
 			
 			this.sortSnapshotTree(temp);
