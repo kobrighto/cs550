@@ -126,6 +126,15 @@ public class UserManager {
 				prestatement.setString(1,i);
 				prestatement.setString(2,p);
 				prestatement.executeUpdate();
+				
+				prestatement=conn.prepareStatement("delete from version where owner=?");
+				prestatement.setString(1,i);
+				prestatement.executeUpdate();
+				
+				prestatement=conn.prepareStatement("delete from snapshot where owner=?");
+				prestatement.setString(1,i);
+				prestatement.executeUpdate();
+				
 				state=true;
 				System.out.println("User deletion is completed");
 			}else

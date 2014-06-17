@@ -100,8 +100,8 @@ public class SnapshotManager {
 			Connection conn=JDBC.getConnection();
 			
 			PreparedStatement prestatement=conn.prepareStatement("insert into snapshot (sid, did, diagram, owner, scomment) values (?,?,?,?,?)");
-			int temp = this.getSnapLastVersion();
-			prestatement.setInt(1,temp + 1);
+			int temp = this.getSnapLastVersion() + 1;
+			prestatement.setInt(1,temp);
 			prestatement.setString(2,d.getdID());
 			prestatement.setString(3,d.getDiagram());
 			prestatement.setString(4,this.id);
