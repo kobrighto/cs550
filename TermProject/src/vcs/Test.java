@@ -35,7 +35,7 @@ public class Test {
 
 		JFrame frame = new JFrame();
         Container content = frame.getContentPane();
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        //frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         content.add(new JungTreeViewer(tree));
         frame.pack();

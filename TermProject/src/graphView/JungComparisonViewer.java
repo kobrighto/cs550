@@ -190,7 +190,7 @@ public class JungComparisonViewer {
 		//newVV.getRenderContext().setEdgeShapeTransformer(edgeTransformer);
 		
 		JFrame frame = new JFrame("Comparison View");		
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);		
+		//frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);		
 		JPanel panel = new JPanel(new GridLayout(1,2));
 		panel.add(oldVV);
 		panel.add(newVV);

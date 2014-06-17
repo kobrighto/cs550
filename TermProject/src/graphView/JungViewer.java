@@ -107,7 +107,7 @@ public class JungViewer {
 		vv.getRenderContext().setEdgeShapeTransformer(edgeTransformer);
 
 		JFrame frame = new JFrame("Simple Graph View 2");		
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);		
+		//frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);		
 		JPanel panel = new JPanel(new GridLayout(1,2));
 		panel.add(vv);
 		vv.setOpaque(false);
