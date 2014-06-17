@@ -75,9 +75,9 @@ public class JungComparisonViewer {
 		newLayout.setSize(new Dimension(500, 500));
 		
 		VisualizationViewer<Integer, String> oldVV = new VisualizationViewer<Integer, String>(oldLayout);
-		oldVV.setPreferredSize(new Dimension(700, 700));		
+		oldVV.setPreferredSize(new Dimension(600, 600));  //jy: size		
 		VisualizationViewer<Integer, String> newVV = new VisualizationViewer<Integer, String>(newLayout);
-		newVV.setPreferredSize(new Dimension(700, 700));
+		newVV.setPreferredSize(new Dimension(600, 600));
 		
 		final Color Grey = new Color(0,0,0,0.1f);
 		final Color Green = new Color(0,1,0,0.1f);

@@ -273,7 +273,7 @@ public class VersionManager {
 				
 			System.out.println("Make snapshotTree is completed.");
 			
-			JFrame frame = new JFrame();
+			JFrame frame = new JFrame("Version Tree");
 	        Container content = frame.getContentPane();
 	        //frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 

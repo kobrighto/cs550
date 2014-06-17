@@ -49,7 +49,7 @@ public class JungViewer {
 
 		layout.setSize(new Dimension(500, 500));
 		VisualizationViewer<Integer, String> vv = new VisualizationViewer<Integer, String>(layout);
-		vv.setPreferredSize(new Dimension(1000, 1000));
+		vv.setPreferredSize(new Dimension(500, 500)); //jy: size
 
 		final Color Grey = new Color(0,0,0, 0.1f);
 
@@ -106,7 +106,7 @@ public class JungViewer {
 		vv.getRenderContext().setVertexShapeTransformer(vertexSize);
 		//vv.getRenderContext().setEdgeShapeTransformer(edgeTransformer);
 
-		JFrame frame = new JFrame("Simple Graph View 2");		
+		JFrame frame = new JFrame("Graph View");		
 		//frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);		
 		JPanel panel = new JPanel(new GridLayout(1,2));
 		panel.add(vv);
