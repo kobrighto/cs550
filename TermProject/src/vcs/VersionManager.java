@@ -108,15 +108,21 @@ public class VersionManager {
 			
 			PreparedStatement prestatement=conn.prepareStatement("insert into version (id, owner, did, diagram, vcomment) values (null,?,?,?,?)");
 			
-			if (curBranch.equals("1"))
+			System.out.println("Now curBranch : " + curBranch); //debug
+			System.out.println("Now last Branch : " + this.getLatestBranch(curBranch)); //debug
+			if (this.getLatestBranch(curBranch).length() == 0)
 			{
-				 temp = "1";
+				temp = curBranch;
+				versionTree.add(temp);
 			}
-			else 
+			else
 			{
 				last = this.getLatestBranch(curBranch).substring((this.getLatestBranch(curBranch).length()-1));
-				int lastPlus = Integer.parseInt(last) + 1;
+				int lastPlus = Integer.parseInt(last) + 1;	
 				temp = (this.getLatestBranch(curBranch).substring(0,this.getLatestBranch(curBranch).length()-1)) + String.valueOf(lastPlus);
+				versionTree.add(temp);
+				
+				System.out.println("Now version : " + last +"    "+lastPlus+"    "+temp); //debug
 			}
 			
 			prestatement.setString(1,this.id);
@@ -172,7 +178,7 @@ public class VersionManager {
 			PreparedStatement prestatement=conn.prepareStatement("select * from version where did=? and owner=?");
 			prestatement.setString(1,d);
 			prestatement.setString(2,this.id);
-		//	System.out.println(prestatement.toString());
+		//	System.out.println(prestatement.toString()); //debug
 			ResultSet rs=prestatement.executeQuery();
 			if(rs.next()){
 				prestatement=conn.prepareStatement("delete from version where did=? and owner=?");
@@ -180,6 +186,14 @@ public class VersionManager {
 				prestatement.setString(2, this.id);
 				prestatement.executeUpdate();
 			
+				int i = 0;
+				for (String s:versionTree)
+				{
+					if(s.equals(d))
+						versionTree.remove(i);
+					i++;
+				}		
+				
 				state = true;
 				System.out.println("Delete version is completed");
 			}else{
@@ -198,6 +212,8 @@ public class VersionManager {
 	 * @return 
 	 */
 	public void sortVersionTree(ArrayList<String> versions){		
+		
+		versionTree.clear();
 		for (int i=0; i<versions.size(); i++){
 			//print();
 			String[] versionToAdd = versions.get(i).split("\\.");
@@ -227,7 +243,8 @@ public class VersionManager {
 			if (added == false){
 				versionTree.add(versions.get(i));
 			}
-		}		
+		}
+		System.out.println(versionTree.toString()); //debug
 
 	}
 
@@ -248,7 +265,8 @@ public class VersionManager {
 			ResultSet rs = prestatement.executeQuery();
 			while(rs.next()){
 				String did=rs.getString("did");
-				temp.add(did);	
+				temp.add(did);
+				System.out.println("Exist did : " + did);
 			}
 			
 			this.sortVersionTree(temp);
@@ -257,7 +275,7 @@ public class VersionManager {
 			
 			JFrame frame = new JFrame();
 	        Container content = frame.getContentPane();
-	        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+	        //frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
 	        content.add(new JungTreeViewer(versionTree));
 	        frame.pack();
@@ -340,10 +358,12 @@ public class VersionManager {
 				builder.append(".");
 				builder.append(curBranchToCheck[i]);				
 			}
-			//System.out.println("Builder: " + builder.toString());
+			System.out.println("Builder: " + builder.toString()); //debug
 			latestBranch = getDiaLastVersion(builder.toString());
 		}
-		this.lastVersion = latestBranch;
+		
+		if (latestBranch.length() != 0)
+			this.curBranch = latestBranch;
 		return latestBranch;
 		
 	}
@@ -359,7 +379,7 @@ public class VersionManager {
 		try{
 			Connection conn=JDBC.getConnection();
 			PreparedStatement prestatement=conn.prepareStatement("select * from version where did=?");
-			prestatement.setString(1, d);
+			prestatement.setString(1, d+".1");
 			ResultSet rs = prestatement.executeQuery();
 			
 			if(rs.next())
@@ -369,7 +389,7 @@ public class VersionManager {
 			else
 			{
 				this.curBranch = new String(d + ".1");
-				System.out.println("Make branch is completed.");
+				System.out.println("Make branch is completed.\n @@@@@@ if you don't commit in new branch, branch will be goen. @@@@@");
 			}
 			
 		}catch(Exception e){

@@ -104,7 +104,7 @@ public class JungViewer {
 		vv.getRenderContext().setVertexFillPaintTransformer(vertexPaint);
 		vv.getRenderContext().setEdgeDrawPaintTransformer(edgePaint);
 		vv.getRenderContext().setVertexShapeTransformer(vertexSize);
-		vv.getRenderContext().setEdgeShapeTransformer(edgeTransformer);
+		//vv.getRenderContext().setEdgeShapeTransformer(edgeTransformer);
 
 		JFrame frame = new JFrame("Simple Graph View 2");		
 		//frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);		

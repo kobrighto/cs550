@@ -111,8 +111,8 @@ public class HDVCS_UI {
 			int isfinish = -1;
 			
 			System.out.println("Select next step:");
-			System.out.println("1. Diagram View.");
-			System.out.println("2. Version View.");
+			System.out.println("1. Version View.");
+			System.out.println("2. Snapshot View.");
 			System.out.println("3. Login View.");
 			System.out.println("4. Stop Program.");
 			
@@ -138,7 +138,7 @@ public class HDVCS_UI {
 				break;
 			
 			case 2:
-				isfinish = verView.runVersionView();
+				isfinish = snapView.runSnapshotView();
 				if (isfinish == 0)
 					break;
 				else if (isfinish == 1)
@@ -190,6 +190,8 @@ public class HDVCS_UI {
 		
 		ui.runProgram();
 		
+		System.out.println("Goodbye to HDVCS !\n");
+		System.exit(0);
 	}
 	
 	String readFile(String fileName) throws IOException {

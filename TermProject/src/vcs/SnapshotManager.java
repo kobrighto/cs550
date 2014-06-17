@@ -183,7 +183,7 @@ public class SnapshotManager {
 			
 			JFrame frame = new JFrame();
 	        Container content = frame.getContentPane();
-	        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+	        //frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
 	        content.add(new JungTreeViewer(snapshotTree));
 	        frame.pack();
