@@ -100,12 +100,15 @@ public class SnapshotManager {
 			Connection conn=JDBC.getConnection();
 			
 			PreparedStatement prestatement=conn.prepareStatement("insert into snapshot (sid, did, diagram, owner, scomment) values (?,?,?,?,?)");
-			prestatement.setInt(1,this.getSnapLastVersion() + 1);
+			int temp = this.getSnapLastVersion();
+			prestatement.setInt(1,temp + 1);
 			prestatement.setString(2,d.getdID());
 			prestatement.setString(3,d.getDiagram());
 			prestatement.setString(4,this.id);
 			prestatement.setString(5,sc);
 			prestatement.executeUpdate();
+			
+			snapshotTree.add(String.valueOf(temp));
 			
 			System.out.println("store snapshot is completed");
 			state=true;
