@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
-	<classpathentry excluding="cp/DiagramView.java|jdbc/Test.java" kind="src" path="src">
+	<classpathentry excluding="cp/DiagramView.java|jdbc/Test.java|vcs/Test.java|vcs/VersionTree.java|graphTest/Test.java" kind="src" path="src">
 		<attributes>
 			<attribute name="org.eclipse.jdt.launching.CLASSPATH_ATTR_LIBRARY_PATH_ENTRY" value="TermProject/lib"/>
 		</attributes>

@@ -153,13 +153,20 @@ public class VersionManager {
 		
 		GraphReaderTXT oldReader = new GraphReaderTXT();
 		GraphReaderTXT newReader = new GraphReaderTXT();
-		StandardGraph oldGraph = oldReader.readString(this.getVersion(d1).getDiagram());
-		StandardGraph newGraph = newReader.readString(this.getVersion(d2).getDiagram());
 		
-		GraphComparison compare = new GraphComparison();
-		compare.print(oldGraph, newGraph);
-		compare.display(oldGraph, newGraph);
-
+		
+		if ((this.getVersion(d1)!=null) && (this.getVersion(d2)!=null))
+		{
+			StandardGraph oldGraph = oldReader.readString(this.getVersion(d1).getDiagram());
+			StandardGraph newGraph = newReader.readString(this.getVersion(d2).getDiagram());
+			
+			GraphComparison compare = new GraphComparison();
+			compare.print(oldGraph, newGraph);
+			compare.display(oldGraph, newGraph);
+		}
+		else
+			System.out.println("Re difference by using correct version number!");
+		
 	}	
 	
 	/**
