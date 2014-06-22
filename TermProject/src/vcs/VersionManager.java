@@ -59,7 +59,7 @@ public class VersionManager {
 		this.id = i;
 		
 	}
-
+ 
 	/**
 	 * getDiagram.
 	 * 
