@@ -52,7 +52,7 @@ public class VersionView extends HDVCS_UI {
 	/**
 	 * display selected diagram.
 	 * 
-	 * @param String did
+	 * @param String did.
 	 * @return 
 	 */
 	public void displayVersion(String d) {
@@ -70,8 +70,8 @@ public class VersionView extends HDVCS_UI {
 	/**
 	 * run difference.
 	 * 
-	 * @param int version1
-	 * @param int version2
+	 * @param int version1.
+	 * @param int version2.
 	 * @return 
 	 */
 	public void runDiff(String d1, String d2) {
@@ -112,7 +112,7 @@ public class VersionView extends HDVCS_UI {
 	/**
 	 * run delete selected version of diagram.
 	 * 
-	 * @param String did
+	 * @param String did.
 	 * @return 
 	 */
 	public void runDeleteVersion(String d) {
@@ -163,7 +163,7 @@ public class VersionView extends HDVCS_UI {
 	 * run LoginView.
 	 * 
 	 * @param 
-	 * @return integer next do
+	 * @return integer next do.
 	 */
 	public int runVersionView() {
 		

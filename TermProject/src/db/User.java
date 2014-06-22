@@ -11,7 +11,8 @@ public class User {
 	/**
 	 * constructor to set style and type.
 	 * 
-	 * @param .
+	 * @param String id
+	 * @param String password.
 	 * @return 
 	 */
 	public User(String i, String p) 
@@ -20,6 +21,17 @@ public class User {
 		this.id = new String(i);
 		this.pass = new String(p);
 
+	}
+	
+	/**
+	 * get id.
+	 * 
+	 * @param 
+	 * @return String id.
+	 */
+	public String getid()
+	{
+		return id;
 	}
 
 }

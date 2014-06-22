@@ -14,14 +14,21 @@ public class Version {
 	/**
 	 * constructor to set diagram and version.
 	 * 
-	 * @param .
+	 * @param 
 	 * @return 
 	 */
-	
 	public Version(){
 	
 	}
 	
+	/**
+	 * constructor to set diagram and version.
+	 * 
+	 * @param String diagram id.
+	 * @param String diagram.
+	 * @param String version comment.
+	 * @return 
+	 */
 	public Version(String did, String d, String vc) {
 		
 		this.dId = did;
@@ -30,33 +37,45 @@ public class Version {
 
 	}
 	
+	/**
+	 * Make version to String.
+	 * 
+	 * @param 
+	 * @return String version information.
+	 */
 	@Override
 	public String toString() {
 		return "Diagram [diagram=" + diagram + ", version=" + dId + "version comments=" + vcomment + "]";
 	}
-	
-	public String getVcomment() {
-		return vcomment;
-	}
 
-	public void setVcomment(String vcomment) {
-		this.vcomment = vcomment;
-	}
-	
+	/**
+	 * get diagram of version.
+	 * 
+	 * @param 
+	 * @return String diagram of version.
+	 */
 	public String getDiagram() {
 		return diagram;
 	}
 
+	/**
+	 * get diagram id.
+	 * 
+	 * @param 
+	 * @return String diagram id.
+	 */
 	public String getdID() {
 		return dId;
 	}
 	
-	public void setDiagram(String diagram) {
-		this.diagram = diagram;
-	}
-
-	public void setdID(String did) {
-		this.dId = did;
+	/**
+	 * get version comment.
+	 * 
+	 * @param 
+	 * @return String version comment.
+	 */
+	public String getVcomment() {
+		return vcomment;
 	}
 
 }

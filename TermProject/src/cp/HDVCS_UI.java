@@ -31,7 +31,7 @@ public class HDVCS_UI {
 	/**
 	 * shift style of UI view.
 	 * 
-	 * @param enum view sytle.
+	 * @param enum view style.
 	 * @return 
 	 */
 	public void shiftViewStyle(viewStyle style) {
@@ -194,7 +194,13 @@ public class HDVCS_UI {
 		System.exit(0);
 	}
 	
-	String readFile(String fileName) throws IOException {
+	/**
+	 * ReadFile from local directory.
+	 * 
+	 * @param String file path.
+	 * @return String read file.
+	 */
+	public String readFile(String fileName) throws IOException {
 	    BufferedReader br = new BufferedReader(new FileReader(fileName));
 	    try {
 	        StringBuilder sb = new StringBuilder();

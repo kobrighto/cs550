@@ -101,7 +101,7 @@ public class LoginView extends HDVCS_UI {
 	 * run LoginView.
 	 * 
 	 * @param 
-	 * @return boolean state
+	 * @return boolean state.
 	 */
 	public boolean runLoginView() {
 		

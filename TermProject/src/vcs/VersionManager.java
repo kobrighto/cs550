@@ -405,21 +405,27 @@ public class VersionManager {
 
 	}
 
-	public void changeBranch(String vn) {
+	/**
+	 * change branch.
+	 * 
+	 * @param String branch number.
+	 * @return 
+	 */
+	public void changeBranch(String bn) {
 		try{
 			Connection conn=JDBC.getConnection();
 			PreparedStatement prestatement=conn.prepareStatement("select * from version where did=?");
-			prestatement.setString(1, vn);
+			prestatement.setString(1, bn);
 			ResultSet rs = prestatement.executeQuery();
 			
 			if(rs.next())
 			{
-				this.curBranch = new String(vn);
+				this.curBranch = new String(bn);
 				System.out.println("branch change is completed.");
 			}
 			else
 			{
-				System.out.println(vn + " branch is not exist.");
+				System.out.println(bn + " branch is not exist.");
 			}
 			
 		}catch(Exception e){

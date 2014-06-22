@@ -70,7 +70,7 @@ public class SnapshotView extends HDVCS_UI {
 	/**
 	 * run snapshot.
 	 * 
-	 * @param String did
+	 * @param String did.
 	 * @return 
 	 */
 	public void runSnapshot(String did, String sc) {
@@ -96,7 +96,7 @@ public class SnapshotView extends HDVCS_UI {
 	 * run SnapshotView.
 	 * 
 	 * @param 
-	 * @return integer next do
+	 * @return integer next do.
 	 */
 	public int runSnapshotView() {
 		

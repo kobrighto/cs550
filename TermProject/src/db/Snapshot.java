@@ -10,12 +10,7 @@ public class Snapshot {
 	
 	/** comment of snapshot */
 	private String scomment;
-	
-	@Override
-	public String toString() {
-		return "Snapshot [snapshot=" + version.getDiagram() + ", snapshot id=" + sId + "snapshot comments=" + scomment + "]";
-	}
-	
+
 	/**
 	 * constructor to set snapshot and version.
 	 * 
@@ -26,6 +21,14 @@ public class Snapshot {
 		
 	}
 	
+	/**
+	 * constructor to set snapshot and version.
+	 * 
+	 * @param Version version number.
+	 * @param integer snapshot id.
+	 * @param String snapshot comment.
+	 * @return 
+	 */
 	public Snapshot(Version v, int sid, String sc) {
 		
 		this.version = v;
@@ -33,20 +36,46 @@ public class Snapshot {
 		this.scomment = new String(sc);
 		
 	}
-
+	
+	/**
+	 * Make snapshot to String.
+	 * 
+	 * @param 
+	 * @return String Snapshot information.
+	 */
+	@Override
+	public String toString() {
+		return "Snapshot [snapshot=" + version.getDiagram() + ", snapshot id=" + sId + "snapshot comments=" + scomment + "]";
+	}
+	
+	/**
+	 * get version of snapshot.
+	 * 
+	 * @param 
+	 * @return Version version of snapshot.
+	 */
 	public Version getVersion() {
 		return version;
 	}
 
+	/**
+	 * get snapshot ID.
+	 * 
+	 * @param 
+	 * @return integer sid.
+	 */
 	public int getsId() {
 		return sId;
 	}
-
-	public void setVersion(Version v) {
-		this.version = v;
+	
+	/**
+	 * get snapshot comment.
+	 * 
+	 * @param 
+	 * @return String scomment.
+	 */
+	public String getScomment() {
+		return scomment;
 	}
 
-	public void setsID(int sid) {
-		this.sId = sid;
-	}
 }
